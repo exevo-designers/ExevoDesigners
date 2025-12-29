@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Exevo Designers Network | Creative Agency & Academy</title>
+    <title>Exevo Designers Network | Premium Creative Agency & Academy</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
@@ -17,15 +17,24 @@
                     },
                     colors: {
                         royal: {
-                            50: '#eef2ff',
-                            100: '#e0e7ff',
-                            400: '#818cf8',
-                            500: '#6366f1',
-                            600: '#4f46e5',
-                            700: '#4338ca',
-                            800: '#3730a3',
-                            900: '#1e1b4b',
-                            950: '#03030d', 
+                            50: '#eef2ff', 100: '#e0e7ff', 400: '#818cf8',
+                            500: '#6366f1', 600: '#4f46e5', 700: '#4338ca',
+                            800: '#3730a3', 900: '#1e1b4b', 950: '#03030d', 
+                        }
+                    },
+                    animation: {
+                        'slow-spin': 'spin 20s linear infinite',
+                        'reveal': 'reveal 1.2s cubic-bezier(0.77, 0, 0.175, 1) forwards',
+                        'marquee': 'marquee 25s linear infinite',
+                    },
+                    keyframes: {
+                        reveal: {
+                            '0%': { transform: 'translateY(100%)', opacity: '0' },
+                            '100%': { transform: 'translateY(0)', opacity: '1' },
+                        },
+                        marquee: {
+                            '0%': { transform: 'translateX(0%)' },
+                            '100%': { transform: 'translateX(-50%)' },
                         }
                     }
                 }
@@ -33,504 +42,450 @@
         }
     </script>
     <style>
-        :root {
-            --bg-color: #03030d;
-            --text-color: #f8fafc;
-        }
         body {
-            background-color: var(--bg-color);
-            color: var(--text-color);
-            transition: background-color 0.5s ease, color 0.5s ease;
+            background-color: #03030d;
+            color: #eef2ff;
+            cursor: none;
+            overflow-x: hidden;
         }
-        .light {
-            --bg-color: #f8fafc;
-            --text-color: #0f172a;
-        }
-        .royal-glow {
-            background: radial-gradient(circle at 50% -10%, rgba(99, 102, 241, 0.18) 0%, rgba(3, 3, 13, 0) 60%);
-        }
-        .light .royal-glow {
-            background: radial-gradient(circle at 50% -10%, rgba(99, 102, 241, 0.08) 0%, rgba(248, 250, 252, 0) 60%);
-        }
-        .glass-card {
+        @media (max-width: 1024px) { body { cursor: auto; } #cursor, #cursor-ring { display: none; } }
+
+        .glass {
             background: rgba(255, 255, 255, 0.02);
             backdrop-filter: blur(20px);
             border: 1px solid rgba(255, 255, 255, 0.05);
-            transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
         }
-        .light .glass-card {
-            background: rgba(15, 23, 42, 0.02);
-            border: 1px solid rgba(15, 23, 42, 0.05);
+
+        .hero-text {
+            font-size: clamp(3.5rem, 12vw, 10rem);
+            line-height: 0.85;
+            letter-spacing: -0.05em;
+            font-weight: 800;
+            text-transform: uppercase;
         }
-        .glass-card:hover {
-            transform: translateY(-8px);
-            border: 1px solid rgba(99, 102, 241, 0.3);
-            box-shadow: 0 40px 100px -20px rgba(0, 0, 0, 0.3);
+
+        .outline-text {
+            color: transparent;
+            -webkit-text-stroke: 1px rgba(255,255,255,0.3);
         }
-        .btn-gradient {
-            background: linear-gradient(135deg, #6366f1 0%, #3730a3 100%);
+
+        #cursor {
+            width: 8px; height: 8px; background: white; border-radius: 50%;
+            position: fixed; pointer-events: none; z-index: 10000;
+            transition: transform 0.1s ease;
         }
-        .text-gradient {
-            background: linear-gradient(to right, #ffffff, #818cf8);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+
+        #cursor-ring {
+            width: 40px; height: 40px; border: 1px solid rgba(255,255,255,0.2); border-radius: 50%;
+            position: fixed; pointer-events: none; z-index: 9999;
+            transition: all 0.15s cubic-bezier(0.23, 1, 0.32, 1);
         }
-        .light .text-gradient {
-            background: linear-gradient(to right, #0f172a, #4f46e5);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+
+        .project-image-container {
+            clip-path: inset(0% 0% 0% 0% round 2rem);
+            transition: clip-path 0.8s cubic-bezier(0.16, 1, 0.3, 1);
         }
-        .nav-link {
-            position: relative;
+
+        .project-card:hover .project-image-container {
+            clip-path: inset(2% 2% 2% 2% round 3rem);
         }
-        .nav-link::after {
-            content: '';
+
+        .mask-reveal { overflow: hidden; }
+        .mask-reveal span {
+            display: inline-block;
+            animation: reveal 1.2s cubic-bezier(0.77, 0, 0.175, 1) forwards;
+        }
+
+        .blob {
             position: absolute;
-            width: 0;
-            height: 2px;
-            bottom: -4px;
-            left: 0;
-            background-color: #6366f1;
-            transition: width 0.3s ease;
-        }
-        .nav-link:hover::after {
-            width: 100%;
-        }
-        .social-sidebar {
-            position: fixed;
-            left: 2rem;
-            top: 50%;
-            transform: translateY(-50%);
-            z-index: 40;
+            filter: blur(140px);
+            z-index: -1;
+            opacity: 0.3;
         }
 
-        .whatsapp-bubble {
-            animation: pulse-whatsapp 2s infinite;
-        }
-        @keyframes pulse-whatsapp {
-            0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.4); }
-            70% { transform: scale(1.05); box-shadow: 0 0 0 15px rgba(34, 197, 94, 0); }
-            100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(34, 197, 94, 0); }
-        }
-
-        /* NEW: Logo Carousel Animation */
-        @keyframes logoScroll {
-            0% { transform: translateX(0); }
-            100% { transform: translateX(-50%); }
-        }
-        .logo-track {
-            display: flex;
-            width: max-content;
-            animation: logoScroll 30s linear infinite;
-        }
-        .logo-track:hover {
-            animation-play-state: paused;
+        .service-tag {
+            padding: 2px 10px;
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 99px;
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
     </style>
 </head>
-<body class="antialiased selection:bg-royal-500/30">
+<body class="font-sans antialiased dark">
 
-    <div class="fixed bottom-6 right-6 z-[100] flex flex-col items-end">
-        <div id="wa-popup" class="hidden w-80 mb-4 glass-card rounded-2xl overflow-hidden flex-col shadow-2xl scale-95 opacity-0 transition-all duration-300 origin-bottom-right">
-            <div class="bg-green-600 p-4 text-white flex items-center gap-3">
-                <div class="w-10 h-10 rounded-full bg-white overflow-hidden flex items-center justify-center p-1">
-                    <img src="logo/EXEVO LOGO.jpg" alt="Exevo Logo" class="w-full h-full object-contain">
-                </div>
-                <div>
-                    <h4 class="font-bold text-sm">Exevo Virtual Agent</h4>
-                    <p class="text-[10px] opacity-80">Online | Typically replies instantly</p>
-                </div>
-                <button onclick="toggleWA()" class="ml-auto opacity-50 hover:opacity-100 transition-opacity">
-                    <i data-lucide="x" class="w-4 h-4"></i>
-                </button>
-            </div>
-            <div class="p-4 bg-slate-50 dark:bg-black/40 space-y-3 max-h-60 overflow-y-auto" id="wa-chat-area">
-                <div class="bg-white dark:bg-royal-900 p-3 rounded-2xl rounded-tl-none text-xs text-slate-700 dark:text-slate-300 shadow-sm border border-black/5 dark:border-white/5">
-                    Hello! Welcome to Exevo Designers Network. How can we help you today?
-                </div>
-            </div>
-            <div class="p-3 bg-white dark:bg-royal-950 flex gap-2 border-t border-black/5 dark:border-white/5">
-                <input type="text" id="wa-input" placeholder="Type a message..." class="flex-1 bg-slate-100 dark:bg-white/5 border-none rounded-lg px-3 py-2 text-xs outline-none text-slate-900 dark:text-white">
-                <button onclick="sendWA()" class="w-8 h-8 bg-green-600 text-white rounded-lg flex items-center justify-center hover:bg-green-700 transition-colors">
-                    <i data-lucide="send" class="w-4 h-4"></i>
-                </button>
-            </div>
-        </div>
-        <button onclick="toggleWA()" class="whatsapp-bubble w-14 h-14 bg-green-600 rounded-full shadow-2xl flex items-center justify-center text-white hover:bg-green-700 transition-colors relative">
-            <i data-lucide="message-circle" class="w-7 h-7"></i>
-            <span class="absolute -top-1 -right-1 w-4 h-4 bg-red-500 border-2 border-white dark:border-royal-950 rounded-full"></span>
-        </button>
-    </div>
+    <div id="cursor"></div>
+    <div id="cursor-ring"></div>
 
-    <div class="hidden xl:flex social-sidebar flex-col gap-4">
-        <a href="https://www.instagram.com/editornjoro_designs" target="_blank" class="w-10 h-10 rounded-xl glass-card flex items-center justify-center text-slate-400 hover:text-royal-500 hover:scale-110 transition-all"><i data-lucide="instagram" class="w-5 h-5"></i></a>
-        <a href="https://x.com/editornjoro" target="_blank" class="w-10 h-10 rounded-xl glass-card flex items-center justify-center text-slate-400 hover:text-royal-500 hover:scale-110 transition-all"><i data-lucide="twitter" class="w-5 h-5"></i></a>
-        <a href="https://www.behance.net/editornjoro" target="_blank" class="w-10 h-10 rounded-xl glass-card flex items-center justify-center text-slate-400 hover:text-royal-500 hover:scale-110 transition-all"><i data-lucide="layers" class="w-5 h-5"></i></a>
-        <a href="https://youtube.com/@editornjoro_designs" target="_blank" class="w-10 h-10 rounded-xl glass-card flex items-center justify-center text-slate-400 hover:text-royal-500 hover:scale-110 transition-all"><i data-lucide="youtube" class="w-5 h-5"></i></a>
-        <div class="w-px h-12 bg-royal-500/20 mx-auto"></div>
-    </div>
+    <div class="blob w-[600px] h-[600px] bg-royal-600 top-[-10%] left-[-10%] animate-slow-spin"></div>
+    <div class="blob w-[500px] h-[500px] bg-indigo-900 bottom-[10%] right-[-5%]"></div>
 
-    <nav id="main-nav" class="fixed w-full z-50 bg-white/80 dark:bg-royal-950/60 backdrop-blur-2xl border-b border-black/5 dark:border-white/5 transition-all duration-300 h-20">
-        <div class="max-w-7xl mx-auto px-6 h-full flex items-center justify-between">
-            <div class="flex items-center gap-3">
-                <div class="h-12 w-12 flex items-center justify-center rounded-xl bg-transparent overflow-hidden">
-                    <img src="logo/EXEVO LOGO.jpg" alt="Exevo Logo" class="w-full h-full object-contain dark:brightness-100">
+    <nav class="fixed top-0 w-full z-50 px-6 py-8 transition-all duration-500" id="navbar">
+        <div class="max-w-[1400px] mx-auto flex items-center justify-between">
+            <div class="flex items-center gap-3 group cursor-pointer" onclick="window.location.href='index.html'">
+                <div class="w-12 h-12 bg-white text-black rounded-full flex items-center justify-center transition-transform group-hover:scale-110">
+                    <i data-lucide="zap" class="w-6 h-6"></i>
                 </div>
-                <div class="flex flex-col">
-                    <span class="text-xl font-black tracking-tighter text-slate-900 dark:text-white uppercase leading-none">Exevo</span>
-                    <span class="text-[10px] text-royal-500 dark:text-royal-400 font-bold tracking-[0.2em] uppercase">Designers Network</span>
-                </div>
+                <span class="text-2xl font-black tracking-tighter">EXEVO</span>
             </div>
-            
-            <div class="hidden md:flex items-center gap-8 text-sm font-semibold">
-                <a href="#services" class="nav-link text-slate-600 dark:text-gray-400 hover:text-royal-500 transition-colors">Services</a>
-                <a href="#portfolio" class="nav-link text-slate-600 dark:text-gray-400 hover:text-royal-500 transition-colors">Portfolio</a>
-                <a href="#student-hub" class="nav-link text-slate-600 dark:text-gray-400 hover:text-royal-500 transition-colors">Academy</a>
-                <div class="h-6 w-px bg-black/10 dark:bg-white/10 mx-2"></div>
-                <button onclick="toggleTheme()" class="flex items-center justify-center w-10 h-10 rounded-full bg-slate-100 dark:bg-white/5 text-slate-600 dark:text-gray-400">
-                    <i data-lucide="sun" id="sun-icon" class="w-4 h-4 hidden"></i>
-                    <i data-lucide="moon" id="moon-icon" class="w-4 h-4"></i>
-                </button>
-                <a href="#contact" class="btn-gradient text-white px-6 py-2.5 rounded-full shadow-lg shadow-royal-500/20 hover:scale-105 transition-all">Start Project</a>
+
+            <div class="hidden lg:flex gap-12 items-center text-[11px] font-bold uppercase tracking-[0.2em]">
+                <a href="portfolio.html" class="hover:text-royal-400 transition-colors">Portfolio</a>
+                <a href="#services" class="hover:text-royal-400 transition-colors">Services</a>
+                <a href="#about" class="hover:text-royal-400 transition-colors">About</a>
+                <a href="student page.html" class="hover:text-royal-400 transition-colors">Academy</a>
+                <a href="contact.html" class="px-8 py-4 bg-royal-600 text-white rounded-full hover:bg-white hover:text-black transition-all duration-500">Contact Us</a>
             </div>
-            
-            <button class="md:hidden text-slate-900 dark:text-white" onclick="document.getElementById('mobile-menu').classList.toggle('hidden')">
-                <i data-lucide="menu"></i>
+
+            <button class="lg:hidden w-10 h-10 flex items-center justify-center">
+                <i data-lucide="menu" class="w-6 h-6"></i>
             </button>
-        </div>
-        <div id="mobile-menu" class="hidden md:hidden bg-white dark:bg-royal-950 p-6 border-b border-black/5 dark:border-white/5 space-y-4">
-            <a href="#services" class="block text-slate-600 dark:text-gray-400">Services</a>
-            <a href="#portfolio" class="block text-slate-600 dark:text-gray-400">Portfolio</a>
-            <a href="#student-hub" class="block text-royal-600 dark:text-white font-bold">Student Hub</a>
         </div>
     </nav>
 
-    <header class="relative pt-48 pb-32 overflow-hidden royal-glow">
-        <div class="max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-            <div class="relative z-10 text-center lg:text-left">
-                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-royal-500/10 border border-royal-500/20 text-royal-600 dark:text-royal-400 text-[10px] font-black tracking-widest uppercase mb-6">
-                    Professional Creative Agency
-                </div>
-                <h1 class="text-6xl md:text-7xl font-black tracking-tighter text-slate-900 dark:text-white mb-6 leading-tight">
-                    Innovating <br>
-                    <span class="text-gradient">Digital Brands</span>
-                </h1>
-                <p class="text-lg text-slate-600 dark:text-gray-400 max-w-xl mb-10 leading-relaxed">
-                    Exevo Designers is a premium collective of visual architects. We specialize in high-impact graphic design, web development, and digital marketing strategies that scale businesses.
-                </p>
-                <div class="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
-                    <a href="#contact" class="btn-gradient text-white px-8 py-4 rounded-2xl font-bold flex items-center justify-center gap-2 group transition-all">
-                        Hire the Network <i data-lucide="briefcase" class="w-5 h-5"></i>
-                    </a>
-                    <a href="#portfolio" class="px-8 py-4 rounded-2xl font-bold border border-black/10 dark:border-white/10 text-slate-900 dark:text-white flex items-center justify-center gap-2 hover:bg-slate-50 dark:hover:bg-white/5 transition-all">
-                        View Projects
-                    </a>
-                </div>
+    <section class="min-h-screen pt-40 pb-20 px-6 relative flex flex-col justify-center">
+        <div class="max-w-[1400px] mx-auto w-full">
+            <div class="mask-reveal mb-8">
+                <span class="text-royal-400 font-bold uppercase tracking-[0.4em] text-sm">Design · Marketing · Academy</span>
             </div>
             
-            <div class="relative hidden lg:block">
-                <div class="absolute -inset-4 bg-royal-500/20 blur-3xl rounded-full animate-pulse"></div>
-                <div class="glass-card rounded-[3rem] p-4 relative overflow-hidden">
-                    <img src="images/Website.png" alt="Design Showcase" class="rounded-[2.5rem] w-full h-[500px] object-cover opacity-80 group-hover:scale-105 transition-transform duration-700">
-                    <div class="absolute bottom-10 left-10 right-10 p-8 glass-card rounded-3xl border-white/10">
-                        <div class="flex items-center justify-between">
-                            <div>
-                                <p class="text-royal-400 font-bold text-xs uppercase tracking-widest mb-1">Featured Case Study</p>
-                                <h3 class="text-xl font-bold text-white">Engagement Driven UX</h3>
-                            </div>
-                            <div class="h-12 w-12 bg-white/10 rounded-full flex items-center justify-center text-white">
-                                <i data-lucide="arrow-up-right"></i>
-                            </div>
-                        </div>
-                    </div>
+            <h1 class="hero-text mb-12">
+                <div class="mask-reveal"><span>Exevo</span></div>
+                <div class="mask-reveal flex items-center gap-4 md:gap-8">
+                    <span class="outline-text">Designers</span>
+                    <div class="w-20 h-10 md:w-40 md:h-20 bg-royal-600 rounded-full inline-block align-middle animate-pulse"></div>
                 </div>
-            </div>
-        </div>
-    </header>
+                <div class="mask-reveal"><span>Network</span></div>
+            </h1>
 
-    <section id="services" class="py-32 relative">
-        <div class="max-w-7xl mx-auto px-6">
-            <div class="flex flex-col md:flex-row justify-between items-end gap-6 mb-20">
-                <div class="max-w-2xl">
-                    <h2 class="text-4xl font-black text-slate-900 dark:text-white tracking-tighter mb-4 uppercase">Our Capabilities</h2>
-                    <p class="text-slate-600 dark:text-gray-400">A full spectrum of creative solutions designed to position your brand as a market leader.</p>
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-end gap-12 mt-12">
+                <div class="max-w-xl">
+                    <p class="text-2xl text-gray-300 leading-relaxed font-light mb-6">
+                        Empowering the next generation of creatives through our <span class="text-white font-semibold">global network</span> and industry-leading <span class="text-white font-semibold">academy</span>.
+                    </p>
+                    <button class="flex items-center gap-4 group">
+                        <span class="w-12 h-12 rounded-full bg-white text-black flex items-center justify-center group-hover:bg-royal-600 group-hover:text-white transition-all">
+                            <i data-lucide="play" class="w-4 h-4 fill-current"></i>
+                        </span>
+                        <span class="text-xs font-bold uppercase tracking-widest">Our Vision Video</span>
+                    </button>
                 </div>
-                <div class="h-1 w-24 bg-royal-500 rounded-full"></div>
-            </div>
-
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                <div class="glass-card p-8 rounded-[2rem] group">
-                    <div class="w-12 h-12 bg-royal-500/10 rounded-xl flex items-center justify-center mb-6 text-royal-500 group-hover:bg-royal-500 group-hover:text-white transition-all">
-                        <i data-lucide="palette"></i>
-                    </div>
-                    <h3 class="text-xl font-bold mb-3 text-slate-900 dark:text-white">Graphic Design</h3>
-                    <p class="text-sm text-slate-500 dark:text-gray-500 leading-relaxed mb-6">Visual identities, branding, and high-conversion assets for digital and print media.</p>
-                </div>
-                <div class="glass-card p-8 rounded-[2rem] group">
-                    <div class="w-12 h-12 bg-royal-500/10 rounded-xl flex items-center justify-center mb-6 text-royal-500 group-hover:bg-royal-500 group-hover:text-white transition-all">
-                        <i data-lucide="code"></i>
-                    </div>
-                    <h3 class="text-xl font-bold mb-3 text-slate-900 dark:text-white">Web Design</h3>
-                    <p class="text-sm text-slate-500 dark:text-gray-500 leading-relaxed mb-6">Responsive, high-performance websites built with the latest UI/UX principles.</p>
-                </div>
-                <div class="glass-card p-8 rounded-[2rem] group">
-                    <div class="w-12 h-12 bg-royal-500/10 rounded-xl flex items-center justify-center mb-6 text-royal-500 group-hover:bg-royal-500 group-hover:text-white transition-all">
-                        <i data-lucide="video"></i>
-                    </div>
-                    <h3 class="text-xl font-bold mb-3 text-slate-900 dark:text-white">Content Making</h3>
-                    <p class="text-sm text-slate-500 dark:text-gray-500 leading-relaxed mb-6">High-quality video production and photography that tells your brand story effectively.</p>
-                </div>
-                <div class="glass-card p-8 rounded-[2rem] group">
-                    <div class="w-12 h-12 bg-royal-500/10 rounded-xl flex items-center justify-center mb-6 text-royal-500 group-hover:bg-royal-500 group-hover:text-white transition-all">
-                        <i data-lucide="trending-up"></i>
-                    </div>
-                    <h3 class="text-xl font-bold mb-3 text-slate-900 dark:text-white">Digital Marketing</h3>
-                    <p class="text-sm text-slate-500 dark:text-gray-500 leading-relaxed mb-6">Strategic growth hacking and ad management to maximize your online ROI.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section class="py-24 relative overflow-hidden">
-        <div class="max-w-7xl mx-auto px-6">
-            <div class="grid grid-cols-2 lg:grid-cols-4 gap-8">
-                <div class="text-center">
-                    <h4 class="text-5xl font-black text-gradient mb-2">150+</h4>
-                    <p class="text-[10px] font-bold uppercase tracking-widest text-slate-500">Projects Delivered</p>
-                </div>
-                <div class="text-center">
-                    <h4 class="text-5xl font-black text-gradient mb-2">45+</h4>
-                    <p class="text-[10px] font-bold uppercase tracking-widest text-slate-500">Global Clients</p>
-                </div>
-                <div class="text-center">
-                    <h4 class="text-5xl font-black text-gradient mb-2">12</h4>
-                    <p class="text-[10px] font-bold uppercase tracking-widest text-slate-500">Design Awards</p>
-                </div>
-                <div class="text-center">
-                    <h4 class="text-5xl font-black text-gradient mb-2">98%</h4>
-                    <p class="text-[10px] font-bold uppercase tracking-widest text-slate-500">Client Retention</p>
-                </div>
-            </div>
-
-            <div class="mt-20 pt-10 border-t border-black/5 dark:border-white/5">
-                <p class="text-center text-[10px] font-black uppercase tracking-[0.4em] text-slate-400 mb-10">
-                    Trusted By Innovators At
-                </p>
                 
-                <div class="relative overflow-hidden w-full">
-                    <div class="logo-track flex items-center gap-16 md:gap-24">
-                        <img src="brands logos/Dance Pioneers Logo.svg" alt="Dance Pioneers" class="h-10 w-auto object-contain grayscale opacity-40 hover:grayscale-0 hover:opacity-100 dark:invert transition-all duration-500">
-                        <img src="brands logos/Ansa Internet Logo.svg" alt="Ansa Internet" class="h-10 w-auto object-contain grayscale opacity-40 hover:grayscale-0 hover:opacity-100 dark:invert transition-all duration-500">
-                        <img src="brands logos/Blossom Groove Vet Care logo.svg" alt="Blossom Groove" class="h-10 w-auto object-contain grayscale opacity-40 hover:grayscale-0 hover:opacity-100 dark:invert transition-all duration-500">
-                        <img src="brands logos/DollaMoja Hub Logo.svg" alt="DollaMoja Hub" class="h-10 w-auto object-contain grayscale opacity-40 hover:grayscale-0 hover:opacity-100 dark:invert transition-all duration-500">
-                        <img src="brands logos/Lewisky Logo.svg" alt="Lewisky" class="h-10 w-auto object-contain grayscale opacity-40 hover:grayscale-0 hover:opacity-100 dark:invert transition-all duration-500">
-                        
-                        <img src="brands logos/Dance Pioneers Logo.svg" alt="Dance Pioneers" class="h-10 w-auto object-contain grayscale opacity-40 hover:grayscale-0 hover:opacity-100 dark:invert transition-all duration-500">
-                        <img src="brands logos/Ansa Internet Logo.svg" alt="Ansa Internet" class="h-10 w-auto object-contain grayscale opacity-40 hover:grayscale-0 hover:opacity-100 dark:invert transition-all duration-500">
-                        <img src="brands logos/Blossom Groove Vet Care logo.svg" alt="Blossom Groove" class="h-10 w-auto object-contain grayscale opacity-40 hover:grayscale-0 hover:opacity-100 dark:invert transition-all duration-500">
-                        <img src="brands logos/DollaMoja Hub Logo.svg" alt="DollaMoja Hub" class="h-10 w-auto object-contain grayscale opacity-40 hover:grayscale-0 hover:opacity-100 dark:invert transition-all duration-500">
-                        <img src="brands logos/Lewisky Logo.svg" alt="Lewisky" class="h-10 w-auto object-contain grayscale opacity-40 hover:grayscale-0 hover:opacity-100 dark:invert transition-all duration-500">
+                <div class="flex gap-16 border-t border-white/10 pt-8 w-full md:w-auto">
+                    <div>
+                        <p class="text-[10px] uppercase tracking-widest text-gray-500 font-bold mb-2">Location</p>
+                        <p class="font-semibold italic">Based in Nairobi — Serving Global Brands</p>
+                    </div>
+                    <div>
+                        <p class="text-[10px] uppercase tracking-widest text-gray-500 font-bold mb-2">Network Size</p>
+                        <p class="font-semibold italic">250+ Designers Strong</p>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <section id="student-hub" class="py-24 relative overflow-hidden">
-        <div class="absolute inset-0 bg-royal-600/5 -skew-y-3"></div>
-        <div class="max-w-5xl mx-auto px-6 relative z-10">
-            <div class="glass-card p-12 md:p-20 rounded-[3rem] text-center border-royal-500/20">
-                <div class="inline-flex items-center justify-center w-20 h-20 bg-royal-500 rounded-full mb-8 text-white shadow-2xl shadow-royal-500/40">
-                    <i data-lucide="graduation-cap" class="w-10 h-10"></i>
-                </div>
-                <h2 class="text-4xl md:text-5xl font-black mb-6 text-slate-900 dark:text-white tracking-tighter uppercase">Join Our Academy</h2>
-                <p class="text-xl text-slate-600 dark:text-gray-400 max-w-2xl mx-auto mb-10 leading-relaxed">
-                    Ready to transform from a student to an elite professional? Our 2026 intake is now open. Learn the craft, master the tools, and build your own agency.
-                </p>
-                <a href="student page.html" class="btn-gradient text-white px-12 py-5 rounded-2xl font-black text-lg shadow-2xl shadow-royal-500/30 hover:scale-105 transition-all inline-flex items-center gap-4">
-                    Explore Enrollment Page <i data-lucide="arrow-right" class="w-6 h-6"></i>
-                </a>
-            </div>
-        </div>
-    </section>
-
-    <section id="portfolio" class="py-32">
-        <div class="max-w-7xl mx-auto px-6">
-            <div class="text-center mb-16">
-                <h2 class="text-3xl font-black mb-4 text-slate-900 dark:text-white uppercase tracking-tighter">Recent Projects</h2>
-                <div class="h-1.5 w-12 bg-royal-500 mx-auto rounded-full"></div>
-            </div>
-            
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                <div class="group relative overflow-hidden rounded-[2.5rem]">
-                    <img src="images/Tasty Arena Look.jpg" class="w-full h-80 object-cover group-hover:scale-110 transition-transform duration-700">
-                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity p-8 flex flex-col justify-end">
-                        <span class="text-royal-400 text-xs font-bold tracking-widest uppercase mb-2">Branding</span>
-                        <h4 class="text-2xl font-bold text-white">Tasty Arena</h4>
-                    </div>
-                </div>
-                <div class="group relative overflow-hidden rounded-[2.5rem]">
-                    <img src="images/UrbanSpin Laundromat Flyer.png" class="w-full h-80 object-cover group-hover:scale-110 transition-transform duration-700">
-                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity p-8 flex flex-col justify-end">
-                        <span class="text-royal-400 text-xs font-bold tracking-widest uppercase mb-2">Social Media</span>
-                        <h4 class="text-2xl font-bold text-white">Flyer Design</h4>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <div class="max-w-7xl mx-auto px-6 pb-32">
-        <div class="glass-card p-8 rounded-[2.5rem] flex flex-col md:flex-row items-center justify-between gap-8 border-royal-500/10 hover:border-royal-500/30 transition-all">
-            <div class="flex items-center gap-6">
-                <div class="w-16 h-16 bg-[#0057ff]/10 rounded-2xl flex items-center justify-center text-[#0057ff]">
-                    <i data-lucide="layers" class="w-8 h-8"></i>
-                </div>
-                <div>
-                    <h3 class="text-2xl font-bold text-slate-900 dark:text-white">Hungry for more?</h3>
-                    <p class="text-slate-500 dark:text-gray-400">Explore our full archive of case studies and process shots on Behance.</p>
-                </div>
-            </div>
-            <a href="https://www.behance.net/editornjoro" target="_blank" class="flex items-center gap-2 font-bold text-royal-500 hover:text-royal-400 transition-colors group">
-                Follow our Behance <i data-lucide="external-link" class="w-5 h-5 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform"></i>
-            </a>
+    <div class="py-10 border-y border-white/5 overflow-hidden flex whitespace-nowrap bg-white/2">
+        <div class="flex animate-marquee gap-20 items-center">
+            <span class="text-4xl font-black uppercase opacity-20">Graphic Design</span>
+            <span class="text-4xl font-black uppercase opacity-20">Web Development</span>
+            <span class="text-4xl font-black uppercase opacity-20">Content Strategy</span>
+            <span class="text-4xl font-black uppercase opacity-20">Digital Marketing</span>
+            <span class="text-4xl font-black uppercase opacity-20">Creative Academy</span>
+            <span class="text-4xl font-black uppercase opacity-20">Graphic Design</span>
+            <span class="text-4xl font-black uppercase opacity-20">Web Development</span>
+            <span class="text-4xl font-black uppercase opacity-20">Content Strategy</span>
+            <span class="text-4xl font-black uppercase opacity-20">Digital Marketing</span>
+            <span class="text-4xl font-black uppercase opacity-20">Creative Academy</span>
         </div>
     </div>
 
-    <section id="contact" class="py-32 bg-slate-50 dark:bg-royal-950/20 relative">
-        <div class="max-w-6xl mx-auto px-6">
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-16">
-                <div>
-                    <h2 class="text-5xl font-black mb-8 text-slate-900 dark:text-white tracking-tighter uppercase leading-none">Start a <br><span class="text-royal-500">Project</span></h2>
-                    <p class="text-lg text-slate-600 dark:text-gray-400 mb-12">
-                        Ready to elevate your digital presence? Reach out directly via our official channels.
-                    </p>
-                    <div class="space-y-8">
-                        <div class="flex items-center gap-4">
-                            <div class="w-12 h-12 bg-royal-500/10 rounded-2xl flex items-center justify-center text-royal-500"><i data-lucide="mail"></i></div>
-                            <div>
-                                <p class="text-[10px] font-bold text-royal-500 uppercase tracking-widest">Email Us</p>
-                                <span class="font-bold text-slate-900 dark:text-white">exevodesigners@gmail.com</span>
-                            </div>
+    <section id="about" class="py-40 px-6">
+        <div class="max-w-[1400px] mx-auto grid lg:grid-cols-2 gap-24 items-center">
+            <div class="space-y-12">
+                <h2 class="text-6xl md:text-8xl font-black tracking-tighter uppercase leading-[0.85]">We Build <br> <span class="text-royal-500 italic">Communities</span> <br> Not Just Sites</h2>
+                <p class="text-xl text-gray-400 leading-relaxed">
+                    Exevo Designers is more than an agency. We are a community hub and marketplace designed to showcase elite talent while driving engagement and revenue for brands who demand excellence. Our mission is to bridge the gap between education and industry.
+                </p>
+                <div class="grid grid-cols-2 gap-8 pt-8">
+                    <div class="glass p-8 rounded-3xl space-y-4">
+                        <i data-lucide="target" class="text-royal-400"></i>
+                        <h4 class="font-bold uppercase tracking-widest text-sm">Mission</h4>
+                        <p class="text-sm text-gray-400">To cultivate a world-class network of designers and marketers through continuous learning and impactful collaboration.</p>
+                    </div>
+                    <div class="glass p-8 rounded-3xl space-y-4">
+                        <i data-lucide="eye" class="text-royal-400"></i>
+                        <h4 class="font-bold uppercase tracking-widest text-sm">Vision</h4>
+                        <p class="text-sm text-gray-400">To become the global standard for creative networking and professional development in the digital age.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="relative group">
+                <div class="absolute -inset-4 bg-royal-600/20 rounded-[4rem] blur-2xl group-hover:bg-royal-600/30 transition-all"></div>
+                <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&q=80" class="relative rounded-[3rem] w-full aspect-square object-cover grayscale group-hover:grayscale-0 transition-all duration-700" alt="Team Work">
+            </div>
+        </div>
+    </section>
+
+    <section id="services" class="py-40 px-6 bg-white text-black rounded-[4rem] relative z-10">
+        <div class="max-w-[1400px] mx-auto">
+            <div class="flex flex-col md:flex-row justify-between items-end mb-32 gap-8">
+                <h2 class="text-6xl md:text-8xl font-black tracking-tighter uppercase">Our<br>Core Expertise</h2>
+                <p class="max-w-xs text-xs font-bold uppercase tracking-widest leading-loose text-gray-500">
+                    A comprehensive suite of digital solutions tailored for the modern enterprise.
+                </p>
+            </div>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
+                <div class="p-10 border border-black/5 hover:bg-royal-600 hover:text-white transition-all duration-500 group rounded-[2rem]">
+                    <div class="mb-12"><i data-lucide="pen-tool" class="w-12 h-12"></i></div>
+                    <h3 class="text-2xl font-bold mb-4">Graphic Design</h3>
+                    <p class="text-sm opacity-60 mb-8">Visual identity, branding, and motion graphics that define your market presence.</p>
+                    <ul class="text-[10px] uppercase font-bold tracking-widest space-y-2 opacity-40">
+                        <li>· Logo & Identity</li>
+                        <li>· Print & Digital</li>
+                        <li>· Illustration</li>
+                    </ul>
+                </div>
+                <div class="p-10 border border-black/5 hover:bg-royal-600 hover:text-white transition-all duration-500 group rounded-[2rem]">
+                    <div class="mb-12"><i data-lucide="layout" class="w-12 h-12"></i></div>
+                    <h3 class="text-2xl font-bold mb-4">Web Design</h3>
+                    <p class="text-sm opacity-60 mb-8">Performance-driven UI/UX and scalable architectures for a seamless digital journey.</p>
+                    <ul class="text-[10px] uppercase font-bold tracking-widest space-y-2 opacity-40">
+                        <li>· Custom Dev</li>
+                        <li>· Responsive UI</li>
+                        <li>· E-Commerce</li>
+                    </ul>
+                </div>
+                <div class="p-10 border border-black/5 hover:bg-royal-600 hover:text-white transition-all duration-500 group rounded-[2rem]">
+                    <div class="mb-12"><i data-lucide="camera" class="w-12 h-12"></i></div>
+                    <h3 class="text-2xl font-bold mb-4">Content Making</h3>
+                    <p class="text-sm opacity-60 mb-8">Strategic storytelling and media production designed to engage and convert.</p>
+                    <ul class="text-[10px] uppercase font-bold tracking-widest space-y-2 opacity-40">
+                        <li>· Video Production</li>
+                        <li>· Copywriting</li>
+                        <li>· Photography</li>
+                    </ul>
+                </div>
+                <div class="p-10 border border-black/5 hover:bg-royal-600 hover:text-white transition-all duration-500 group rounded-[2rem]">
+                    <div class="mb-12"><i data-lucide="trending-up" class="w-12 h-12"></i></div>
+                    <h3 class="text-2xl font-bold mb-4">Digital Marketing</h3>
+                    <p class="text-sm opacity-60 mb-8">Data-led campaigns and social strategies to amplify your brand voice globally.</p>
+                    <ul class="text-[10px] uppercase font-bold tracking-widest space-y-2 opacity-40">
+                        <li>· SEO/SEM</li>
+                        <li>· Social Ads</li>
+                        <li>· Growth Hacking</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="portfolio" class="py-40 px-6">
+        <div class="max-w-[1400px] mx-auto">
+            <div class="flex justify-between items-end mb-32 border-b border-white/10 pb-12">
+                <h2 class="text-6xl md:text-8xl font-black tracking-tighter uppercase">Selected<br>Portfolio</h2>
+                <div class="hidden md:flex gap-4 mb-4">
+                    <span class="service-tag text-white bg-royal-600 border-none">All</span>
+                    <span class="service-tag text-gray-500">Branding</span>
+                    <span class="service-tag text-gray-500">Web</span>
+                    <span class="service-tag text-gray-500">Marketing</span>
+                </div>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-x-20 gap-y-40">
+                <div class="project-card group cursor-pointer">
+                    <div class="project-image-container aspect-[16/10] bg-gray-900 overflow-hidden mb-8">
+                        <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80" class="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110" alt="Web Project">
+                    </div>
+                    <div class="flex justify-between items-start">
+                        <div class="space-y-2">
+                            <p class="text-xs font-bold uppercase tracking-widest text-royal-400">Web Design Portfolio</p>
+                            <h3 class="text-4xl font-bold tracking-tight">Financial Dashboard UI</h3>
                         </div>
-                        <div class="flex items-center gap-4">
-                            <div class="w-12 h-12 bg-royal-500/10 rounded-2xl flex items-center justify-center text-royal-500"><i data-lucide="phone"></i></div>
-                            <div>
-                                <p class="text-[10px] font-bold text-royal-500 uppercase tracking-widest">Call or Text</p>
-                                <span class="font-bold text-slate-900 dark:text-white">+254 700-552-884</span>
-                            </div>
+                        <div class="w-12 h-12 rounded-full border border-white/20 flex items-center justify-center group-hover:bg-white group-hover:text-black transition-all">
+                            <i data-lucide="arrow-up-right" class="w-5 h-5"></i>
                         </div>
                     </div>
                 </div>
 
-                <div class="glass-card p-10 rounded-[2.5rem] border-royal-500/20 shadow-2xl">
-                    <form onsubmit="event.preventDefault(); alert('Message sent successfully!')" class="space-y-4">
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                            <div class="space-y-2">
-                                <label class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Full Name</label>
-                                <input type="text" placeholder="Your Name" class="w-full bg-slate-100 dark:bg-black/20 border border-black/10 dark:border-white/10 rounded-xl px-4 py-3 text-slate-900 dark:text-white outline-none focus:border-royal-500 transition-all" required>
-                            </div>
-                            <div class="space-y-2">
-                                <label class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Email Address</label>
-                                <input type="email" placeholder="email@example.com" class="w-full bg-slate-100 dark:bg-black/20 border border-black/10 dark:border-white/10 rounded-xl px-4 py-3 text-slate-900 dark:text-white outline-none focus:border-royal-500 transition-all" required>
-                            </div>
-                        </div>
-
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                            <div class="space-y-2">
-                                <label class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Phone Number</label>
-                                <input type="tel" placeholder="+254..." class="w-full bg-slate-100 dark:bg-black/20 border border-black/10 dark:border-white/10 rounded-xl px-4 py-3 text-slate-900 dark:text-white outline-none focus:border-royal-500 transition-all" required>
-                            </div>
-                            <div class="space-y-2">
-                                <label class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Interested Service</label>
-                                <select class="w-full bg-slate-100 dark:bg-black/20 border border-black/10 dark:border-white/10 rounded-xl px-4 py-3 text-slate-900 dark:text-white outline-none focus:border-royal-500 transition-all appearance-none cursor-pointer">
-                                    <option value="graphic" class="bg-white dark:bg-royal-950 text-slate-900 dark:text-white">Graphic Design</option>
-                                    <option value="web" class="bg-white dark:bg-royal-950 text-slate-900 dark:text-white">Web Development</option>
-                                    <option value="content" class="bg-white dark:bg-royal-950 text-slate-900 dark:text-white">Content Creation</option>
-                                    <option value="marketing" class="bg-white dark:bg-royal-950 text-slate-900 dark:text-white">Digital Marketing</option>
-                                </select>
-                            </div>
-                        </div>
-
+                <div class="project-card group cursor-pointer md:mt-40">
+                    <div class="project-image-container aspect-[16/10] bg-gray-900 overflow-hidden mb-8">
+                        <img src="https://images.unsplash.com/photo-1542744094-24638eff58bb?auto=format&fit=crop&q=80" class="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110" alt="Marketing Project">
+                    </div>
+                    <div class="flex justify-between items-start">
                         <div class="space-y-2">
-                            <label class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Project Brief</label>
-                            <textarea rows="4" placeholder="Tell us about your project goals..." class="w-full bg-slate-100 dark:bg-black/20 border border-black/10 dark:border-white/10 rounded-xl px-4 py-3 text-slate-900 dark:text-white outline-none focus:border-royal-500 transition-all" required></textarea>
+                            <p class="text-xs font-bold uppercase tracking-widest text-royal-400">Content & Marketing</p>
+                            <h3 class="text-4xl font-bold tracking-tight">Social Growth Campaign</h3>
                         </div>
-                        <button type="submit" class="w-full btn-gradient py-4 rounded-xl text-white font-black uppercase tracking-widest hover:scale-[1.02] transition-all">Send Proposal</button>
-                    </form>
+                        <div class="w-12 h-12 rounded-full border border-white/20 flex items-center justify-center group-hover:bg-white group-hover:text-black transition-all">
+                            <i data-lucide="arrow-up-right" class="w-5 h-5"></i>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <section class="py-32 relative overflow-hidden">
-        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-royal-600/10 blur-[120px] rounded-full"></div>
-        <div class="max-w-4xl mx-auto px-6 relative z-10 text-center">
-            <h2 class="text-5xl md:text-6xl font-black text-slate-900 dark:text-white tracking-tighter mb-8 uppercase">Let's build the <br><span class="text-gradient">Future together</span></h2>
-            <div class="flex flex-col sm:flex-row items-center justify-center gap-6">
-                <a href="#contact" class="w-full sm:w-auto btn-gradient text-white px-10 py-5 rounded-2xl font-black uppercase tracking-widest shadow-2xl shadow-royal-500/40 hover:scale-105 transition-all">Secure a Consultation</a>
+    <section class="py-40 px-6 bg-black relative overflow-hidden" id="stats">
+        <div class="max-w-7xl mx-auto flex flex-wrap justify-between gap-20 relative z-10">
+            <div class="space-y-4 border-l border-royal-600/30 pl-8">
+                <span class="text-8xl font-black block counter" data-target="98">0%</span>
+                <p class="text-gray-500 font-bold uppercase tracking-widest text-xs">Satisfaction Rate</p>
+            </div>
+            <div class="space-y-4 border-l border-royal-600/30 pl-8">
+                <span class="text-8xl font-black block counter" data-target="250">0+</span>
+                <p class="text-gray-500 font-bold uppercase tracking-widest text-xs">Designers Network</p>
+            </div>
+            <div class="space-y-4 border-l border-royal-600/30 pl-8">
+                <span class="text-8xl font-black block counter" data-target="15">0+</span>
+                <p class="text-gray-500 font-bold uppercase tracking-widest text-xs">Industry Awards</p>
+            </div>
+        </div>
+        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-[20vw] font-black text-white/5 whitespace-nowrap pointer-events-none select-none">
+            EXEVO PERFORMANCE
+        </div>
+    </section>
+
+    <section id="academy" class="py-40 px-6 bg-royal-600 text-white text-center rounded-t-[4rem]">
+        <div class="max-w-4xl mx-auto space-y-12">
+            <span class="text-xs font-bold uppercase tracking-[0.5em] opacity-60">Exevo Academy</span>
+            <h2 class="text-5xl md:text-8xl font-black tracking-tighter uppercase leading-[0.9]">Elevate Your <br> Creative Future</h2>
+            <p class="text-xl opacity-80 leading-relaxed max-w-2xl mx-auto">
+                Join 250+ professionals learning the skills that power today's digital economy. From branding to growth hacking.
+            </p>
+            <div class="flex flex-wrap justify-center gap-6">
+                <button onclick="window.location.href='student page.html'" class="px-12 py-6 bg-white text-black rounded-full font-bold text-lg hover:bg-black hover:text-white transition-all duration-500">Join the Academy</button>
+                <button onclick="window.location.href='contact.html'" class="px-12 py-6 bg-transparent border-2 border-white rounded-full font-bold text-lg hover:bg-white hover:text-black transition-all duration-500">Hire a Designer</button>
             </div>
         </div>
     </section>
 
-    <footer class="py-20 border-t border-black/5 dark:border-white/5">
-        <div class="max-w-7xl mx-auto px-6">
-            <div class="flex flex-col md:flex-row justify-between items-center gap-8 mb-12">
-                <div class="flex flex-col">
-                    <span class="text-xl font-black tracking-tighter text-slate-900 dark:text-white uppercase leading-none">Exevo</span>
-                    <span class="text-[10px] text-royal-500 dark:text-royal-400 font-bold tracking-[0.2em] uppercase">Designers Network</span>
+    <footer class="py-20 px-6 bg-black">
+        <div class="max-w-[1400px] mx-auto grid md:grid-cols-4 gap-20 border-b border-white/5 pb-20 mb-20">
+            <div class="col-span-2 space-y-8">
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 bg-white text-black rounded-full flex items-center justify-center"><i data-lucide="zap" class="w-5 h-5"></i></div>
+                    <span class="text-2xl font-black tracking-tighter">EXEVO</span>
                 </div>
-                <div class="flex gap-6 text-xs font-bold uppercase tracking-widest text-slate-500">
-                    <a href="https://www.instagram.com/editornjoro_designs" target="_blank" class="hover:text-royal-500 transition-all">Instagram</a>
-                    <a href="https://www.behance.net/editornjoro" target="_blank" class="hover:text-royal-500 transition-all">Behance</a>
-                </div>
+                <p class="text-gray-500 max-w-sm">Elevating brands through high-performance design, strategic content, and a world-class creative network.</p>
             </div>
-            <p class="text-center text-slate-400 dark:text-gray-600 text-[10px] font-black uppercase tracking-[0.3em]">&copy; 2026 Exevo Designers Network</p>
+            <div class="space-y-6">
+                <h4 class="text-xs font-bold uppercase tracking-widest text-white">Navigation</h4>
+                <ul class="text-sm text-gray-500 space-y-4">
+                    <li><a href="#portfolio" class="hover:text-white transition-colors">Portfolio</a></li>
+                    <li><a href="#services" class="hover:text-white transition-colors">Services</a></li>
+                    <li><a href="student page.html" class="hover:text-white transition-colors">Academy</a></li>
+                    <li><a href="contact.html" class="hover:text-white transition-colors">Contact</a></li>
+                </ul>
+            </div>
+            <div class="space-y-6">
+                <h4 class="text-xs font-bold uppercase tracking-widest text-white">Contact</h4>
+                <ul class="text-sm text-gray-500 space-y-4">
+                    <li class="flex items-center gap-2">
+                        <i data-lucide="mail" class="w-4 h-4"></i>
+                        <a href="mailto:info@exevodesigners.com" class="hover:text-white transition-colors">info@exevodesigners.com</a>
+                    </li>
+                    <li class="flex items-center gap-2">
+                        <i data-lucide="phone" class="w-4 h-4"></i>
+                        <a href="tel:+254700552884" class="hover:text-white transition-colors">+254 700 552 884</a>
+                    </li>
+                    <li class="flex items-center gap-2">
+                        <i data-lucide="map-pin" class="w-4 h-4"></i>
+                        <span>Nairobi, Kenya</span>
+                    </li>
+                    <li class="flex gap-4 pt-4">
+                        <i data-lucide="instagram" class="w-5 h-5 cursor-pointer hover:text-white"></i>
+                        <i data-lucide="linkedin" class="w-5 h-5 cursor-pointer hover:text-white"></i>
+                        <i data-lucide="twitter" class="w-5 h-5 cursor-pointer hover:text-white"></i>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="max-w-[1400px] mx-auto flex flex-col md:flex-row justify-between items-center gap-6 text-[10px] font-bold uppercase tracking-widest text-gray-600">
+            <p>© 2025 EXEVO DESIGNERS NETWORK. ALL RIGHTS RESERVED.</p>
+            <a href="#" class="hover:text-white">Privacy Policy</a>
+            <a href="#" class="hover:text-white">Terms of Service</a>
         </div>
     </footer>
 
     <script>
         lucide.createIcons();
 
-        function toggleTheme() {
-            const body = document.body;
-            const moonIcon = document.getElementById('moon-icon');
-            const sunIcon = document.getElementById('sun-icon');
-            if (body.classList.contains('light')) {
-                body.classList.remove('light');
-                document.documentElement.classList.add('dark');
-                moonIcon.classList.remove('hidden');
-                sunIcon.classList.add('hidden');
+        // Custom Cursor Logic
+        const cursor = document.getElementById('cursor');
+        const cursorRing = document.getElementById('cursor-ring');
+
+        document.addEventListener('mousemove', (e) => {
+            cursor.style.left = e.clientX + 'px';
+            cursor.style.top = e.clientY + 'px';
+            setTimeout(() => {
+                cursorRing.style.left = (e.clientX - 20) + 'px';
+                cursorRing.style.top = (e.clientY - 20) + 'px';
+            }, 60);
+        });
+
+        const interactiveElements = document.querySelectorAll('a, button, .project-card, .group');
+        interactiveElements.forEach(el => {
+            el.addEventListener('mouseenter', () => {
+                cursorRing.style.transform = 'scale(2)';
+                cursorRing.style.background = 'rgba(255,255,255,1)';
+                cursorRing.style.mixBlendMode = 'difference';
+                cursor.style.opacity = '0';
+            });
+            el.addEventListener('mouseleave', () => {
+                cursorRing.style.transform = 'scale(1)';
+                cursorRing.style.background = 'transparent';
+                cursorRing.style.mixBlendMode = 'normal';
+                cursor.style.opacity = '1';
+            });
+        });
+
+        // Sticky Nav logic
+        window.addEventListener('scroll', () => {
+            const nav = document.getElementById('navbar');
+            if (window.scrollY > 100) {
+                nav.style.background = 'rgba(3, 3, 13, 0.8)';
+                nav.style.backdropFilter = 'blur(10px)';
+                nav.style.paddingTop = '1rem';
+                nav.style.paddingBottom = '1rem';
             } else {
-                body.classList.add('light');
-                document.documentElement.classList.remove('dark');
-                moonIcon.classList.add('hidden');
-                sunIcon.classList.remove('hidden');
+                nav.style.background = 'transparent';
+                nav.style.backdropFilter = 'none';
+                nav.style.paddingTop = '2rem';
+                nav.style.paddingBottom = '2rem';
             }
-        }
+        });
 
-        function toggleWA() {
-            const popup = document.getElementById('wa-popup');
-            if (popup.classList.contains('hidden')) {
-                popup.classList.remove('hidden');
-                setTimeout(() => popup.classList.add('scale-100', 'opacity-100', 'flex'), 10);
-            } else {
-                popup.classList.remove('scale-100', 'opacity-100');
-                setTimeout(() => popup.classList.add('hidden'), 300);
-            }
-        }
+        // Counter Logic
+        const startCounters = () => {
+            const counters = document.querySelectorAll('.counter');
+            counters.forEach(counter => {
+                const target = parseInt(counter.getAttribute('data-target'));
+                let count = 0;
+                const speed = 1500 / target;
+                const update = () => {
+                    if (count < target) {
+                        count++;
+                        counter.innerText = count + (target === 98 ? '%' : '+');
+                        setTimeout(update, speed);
+                    }
+                };
+                update();
+            });
+        };
 
-        function sendWA() {
-            const input = document.getElementById('wa-input');
-            const msg = input.value.trim();
-            if (msg) {
-                window.open(`https://wa.me/254700552884?text=${encodeURIComponent(msg)}`, '_blank');
-                input.value = '';
-            }
-        }
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    startCounters();
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.5 });
 
-        // Initialize Dark Mode by default
-        document.documentElement.classList.add('dark');
+        observer.observe(document.getElementById('stats'));
     </script>
 </body>
 </html>
