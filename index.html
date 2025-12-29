@@ -47,6 +47,7 @@
             color: #eef2ff;
             cursor: none;
             overflow-x: hidden;
+            width: 100%;
         }
         @media (max-width: 1024px) { body { cursor: auto; } #cursor, #cursor-ring { display: none; } }
 
@@ -57,8 +58,8 @@
         }
 
         .hero-text {
-            font-size: clamp(3.5rem, 12vw, 10rem);
-            line-height: 0.85;
+            font-size: clamp(2.5rem, 10vw, 10rem);
+            line-height: 1;
             letter-spacing: -0.05em;
             font-weight: 800;
             text-transform: uppercase;
@@ -111,6 +112,15 @@
             text-transform: uppercase;
             letter-spacing: 1px;
         }
+
+        /* Mobile Menu Styles */
+        #mobile-overlay {
+            clip-path: circle(0% at 100% 0%);
+            transition: clip-path 0.6s cubic-bezier(0.77, 0, 0.175, 1);
+        }
+        #mobile-overlay.active {
+            clip-path: circle(150% at 100% 0%);
+        }
     </style>
 </head>
 <body class="font-sans antialiased dark">
@@ -118,16 +128,29 @@
     <div id="cursor"></div>
     <div id="cursor-ring"></div>
 
-    <div class="blob w-[600px] h-[600px] bg-royal-600 top-[-10%] left-[-10%] animate-slow-spin"></div>
-    <div class="blob w-[500px] h-[500px] bg-indigo-900 bottom-[10%] right-[-5%]"></div>
+    <div id="mobile-overlay" class="fixed inset-0 bg-royal-950 z-[100] lg:hidden flex flex-col justify-center items-center p-6">
+        <button id="close-menu" class="absolute top-8 right-8 text-white">
+            <i data-lucide="x" class="w-10 h-10"></i>
+        </button>
+        <nav class="flex flex-col gap-8 text-center">
+            <a href="portfolio.html" class="text-4xl font-bold hover:text-royal-400">Portfolio</a>
+            <a href="#services" class="mobile-link text-4xl font-bold hover:text-royal-400">Services</a>
+            <a href="#about" class="mobile-link text-4xl font-bold hover:text-royal-400">About</a>
+            <a href="student page.html" class="text-4xl font-bold hover:text-royal-400">Academy</a>
+            <a href="contact.html" class="mt-4 px-10 py-5 bg-royal-600 text-white rounded-full font-bold">Contact Us</a>
+        </nav>
+    </div>
+
+    <div class="blob w-[300px] md:w-[600px] h-[300px] md:h-[600px] bg-royal-600 top-[-10%] left-[-10%] animate-slow-spin"></div>
+    <div class="blob w-[300px] md:w-[500px] h-[300px] md:h-[500px] bg-indigo-900 bottom-[10%] right-[-5%]"></div>
 
     <nav class="fixed top-0 w-full z-50 px-6 py-8 transition-all duration-500" id="navbar">
         <div class="max-w-[1400px] mx-auto flex items-center justify-between">
             <div class="flex items-center gap-3 group cursor-pointer" onclick="window.location.href='index.html'">
-                <div class="w-12 h-12 bg-white text-black rounded-full flex items-center justify-center transition-transform group-hover:scale-110">
+                <div class="w-10 h-10 md:w-12 md:h-12 bg-white text-black rounded-full flex items-center justify-center transition-transform group-hover:scale-110">
                     <i data-lucide="zap" class="w-6 h-6"></i>
                 </div>
-                <span class="text-2xl font-black tracking-tighter">EXEVO</span>
+                <span class="text-xl md:text-2xl font-black tracking-tighter">EXEVO</span>
             </div>
 
             <div class="hidden lg:flex gap-12 items-center text-[11px] font-bold uppercase tracking-[0.2em]">
@@ -138,30 +161,30 @@
                 <a href="contact.html" class="px-8 py-4 bg-royal-600 text-white rounded-full hover:bg-white hover:text-black transition-all duration-500">Contact Us</a>
             </div>
 
-            <button class="lg:hidden w-10 h-10 flex items-center justify-center">
-                <i data-lucide="menu" class="w-6 h-6"></i>
+            <button id="menu-btn" class="lg:hidden w-10 h-10 flex items-center justify-center">
+                <i data-lucide="menu" class="w-8 h-8"></i>
             </button>
         </div>
     </nav>
 
-    <section class="min-h-screen pt-40 pb-20 px-6 relative flex flex-col justify-center">
+    <section class="min-h-screen pt-40 pb-20 px-6 relative flex flex-col justify-center overflow-hidden">
         <div class="max-w-[1400px] mx-auto w-full">
             <div class="mask-reveal mb-8">
-                <span class="text-royal-400 font-bold uppercase tracking-[0.4em] text-sm">Design · Marketing · Academy</span>
+                <span class="text-royal-400 font-bold uppercase tracking-[0.4em] text-xs md:text-sm">Design · Marketing · Academy</span>
             </div>
             
             <h1 class="hero-text mb-12">
                 <div class="mask-reveal"><span>Exevo</span></div>
-                <div class="mask-reveal flex items-center gap-4 md:gap-8">
+                <div class="mask-reveal flex flex-wrap items-center gap-4 md:gap-8">
                     <span class="outline-text">Designers</span>
-                    <div class="w-20 h-10 md:w-40 md:h-20 bg-royal-600 rounded-full inline-block align-middle animate-pulse"></div>
+                    <div class="w-16 h-8 md:w-40 md:h-20 bg-royal-600 rounded-full inline-block align-middle animate-pulse"></div>
                 </div>
                 <div class="mask-reveal"><span>Network</span></div>
             </h1>
 
             <div class="flex flex-col md:flex-row justify-between items-start md:items-end gap-12 mt-12">
                 <div class="max-w-xl">
-                    <p class="text-2xl text-gray-300 leading-relaxed font-light mb-6">
+                    <p class="text-xl md:text-2xl text-gray-300 leading-relaxed font-light mb-6">
                         Empowering the next generation of creatives through our <span class="text-white font-semibold">global network</span> and industry-leading <span class="text-white font-semibold">academy</span>.
                     </p>
                     <button class="flex items-center gap-4 group">
@@ -172,14 +195,14 @@
                     </button>
                 </div>
                 
-                <div class="flex gap-16 border-t border-white/10 pt-8 w-full md:w-auto">
+                <div class="flex flex-wrap gap-8 md:gap-16 border-t border-white/10 pt-8 w-full md:w-auto">
                     <div>
                         <p class="text-[10px] uppercase tracking-widest text-gray-500 font-bold mb-2">Location</p>
-                        <p class="font-semibold italic">Based in Nairobi — Serving Global Brands</p>
+                        <p class="font-semibold italic text-sm md:text-base">Based in Narok, Kenya — Global</p>
                     </div>
                     <div>
                         <p class="text-[10px] uppercase tracking-widest text-gray-500 font-bold mb-2">Network Size</p>
-                        <p class="font-semibold italic">250+ Designers Strong</p>
+                        <p class="font-semibold italic text-sm md:text-base">250+ Designers Strong</p>
                     </div>
                 </div>
             </div>
@@ -187,106 +210,100 @@
     </section>
 
     <div class="py-10 border-y border-white/5 overflow-hidden flex whitespace-nowrap bg-white/2">
-        <div class="flex animate-marquee gap-20 items-center">
-            <span class="text-4xl font-black uppercase opacity-20">Graphic Design</span>
-            <span class="text-4xl font-black uppercase opacity-20">Web Development</span>
-            <span class="text-4xl font-black uppercase opacity-20">Content Strategy</span>
-            <span class="text-4xl font-black uppercase opacity-20">Digital Marketing</span>
-            <span class="text-4xl font-black uppercase opacity-20">Creative Academy</span>
-            <span class="text-4xl font-black uppercase opacity-20">Graphic Design</span>
-            <span class="text-4xl font-black uppercase opacity-20">Web Development</span>
-            <span class="text-4xl font-black uppercase opacity-20">Content Strategy</span>
-            <span class="text-4xl font-black uppercase opacity-20">Digital Marketing</span>
-            <span class="text-4xl font-black uppercase opacity-20">Creative Academy</span>
+        <div class="flex animate-marquee gap-10 md:gap-20 items-center">
+            <span class="text-2xl md:text-4xl font-black uppercase opacity-20">Graphic Design</span>
+            <span class="text-2xl md:text-4xl font-black uppercase opacity-20">Web Development</span>
+            <span class="text-2xl md:text-4xl font-black uppercase opacity-20">Content Strategy</span>
+            <span class="text-2xl md:text-4xl font-black uppercase opacity-20">Digital Marketing</span>
+            <span class="text-2xl md:text-4xl font-black uppercase opacity-20">Creative Academy</span>
+            <span class="text-2xl md:text-4xl font-black uppercase opacity-20">Graphic Design</span>
+            <span class="text-2xl md:text-4xl font-black uppercase opacity-20">Web Development</span>
+            <span class="text-2xl md:text-4xl font-black uppercase opacity-20">Content Strategy</span>
         </div>
     </div>
 
-    <section id="about" class="py-40 px-6">
-        <div class="max-w-[1400px] mx-auto grid lg:grid-cols-2 gap-24 items-center">
-            <div class="space-y-12">
-                <h2 class="text-6xl md:text-8xl font-black tracking-tighter uppercase leading-[0.85]">We Build <br> <span class="text-royal-500 italic">Communities</span> <br> Not Just Sites</h2>
-                <p class="text-xl text-gray-400 leading-relaxed">
-                    Exevo Designers is more than an agency. We are a community hub and marketplace designed to showcase elite talent while driving engagement and revenue for brands who demand excellence. Our mission is to bridge the gap between education and industry.
+    <section id="about" class="py-20 md:py-40 px-6 overflow-hidden">
+        <div class="max-w-[1400px] mx-auto grid lg:grid-cols-2 gap-16 md:gap-24 items-center">
+            <div class="space-y-8 md:space-y-12">
+                <h2 class="text-5xl md:text-8xl font-black tracking-tighter uppercase leading-[0.9]">We Build <br> <span class="text-royal-500 italic">Communities</span> <br> Not Just Sites</h2>
+                <p class="text-lg md:text-xl text-gray-400 leading-relaxed">
+                    Exevo Designers is more than an agency. We are a community hub and marketplace designed to showcase elite talent while driving engagement and revenue for brands who demand excellence.
                 </p>
-                <div class="grid grid-cols-2 gap-8 pt-8">
-                    <div class="glass p-8 rounded-3xl space-y-4">
+                <div class="grid sm:grid-cols-2 gap-6 pt-8">
+                    <div class="glass p-6 md:p-8 rounded-3xl space-y-4">
                         <i data-lucide="target" class="text-royal-400"></i>
                         <h4 class="font-bold uppercase tracking-widest text-sm">Mission</h4>
-                        <p class="text-sm text-gray-400">To cultivate a world-class network of designers and marketers through continuous learning and impactful collaboration.</p>
+                        <p class="text-sm text-gray-400">To cultivate a world-class network of designers through impactful collaboration.</p>
                     </div>
-                    <div class="glass p-8 rounded-3xl space-y-4">
+                    <div class="glass p-6 md:p-8 rounded-3xl space-y-4">
                         <i data-lucide="eye" class="text-royal-400"></i>
                         <h4 class="font-bold uppercase tracking-widest text-sm">Vision</h4>
-                        <p class="text-sm text-gray-400">To become the global standard for creative networking and professional development in the digital age.</p>
+                        <p class="text-sm text-gray-400">To become the global standard for creative networking in the digital age.</p>
                     </div>
                 </div>
             </div>
-            <div class="relative group">
-                <div class="absolute -inset-4 bg-royal-600/20 rounded-[4rem] blur-2xl group-hover:bg-royal-600/30 transition-all"></div>
-                <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&q=80" class="relative rounded-[3rem] w-full aspect-square object-cover grayscale group-hover:grayscale-0 transition-all duration-700" alt="Team Work">
+            <div class="relative group mt-10 lg:mt-0">
+                <div class="absolute -inset-4 bg-royal-600/20 rounded-[2rem] md:rounded-[4rem] blur-2xl group-hover:bg-royal-600/30 transition-all"></div>
+                <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&q=80" class="relative rounded-[2rem] md:rounded-[3rem] w-full aspect-square object-cover grayscale group-hover:grayscale-0 transition-all duration-700" alt="Team Work">
             </div>
         </div>
     </section>
 
-    <section id="services" class="py-40 px-6 bg-white text-black rounded-[4rem] relative z-10">
+    <section id="services" class="py-20 md:py-40 px-6 bg-white text-black rounded-[2rem] md:rounded-[4rem] relative z-10">
         <div class="max-w-[1400px] mx-auto">
-            <div class="flex flex-col md:flex-row justify-between items-end mb-32 gap-8">
-                <h2 class="text-6xl md:text-8xl font-black tracking-tighter uppercase">Our<br>Core Expertise</h2>
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-end mb-16 md:mb-32 gap-8">
+                <h2 class="text-5xl md:text-8xl font-black tracking-tighter uppercase">Our<br>Core Expertise</h2>
                 <p class="max-w-xs text-xs font-bold uppercase tracking-widest leading-loose text-gray-500">
                     A comprehensive suite of digital solutions tailored for the modern enterprise.
                 </p>
             </div>
 
-            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
-                <div class="p-10 border border-black/5 hover:bg-royal-600 hover:text-white transition-all duration-500 group rounded-[2rem]">
-                    <div class="mb-12"><i data-lucide="pen-tool" class="w-12 h-12"></i></div>
-                    <h3 class="text-2xl font-bold mb-4">Graphic Design</h3>
+            <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div class="p-8 md:p-10 border border-black/5 hover:bg-royal-600 hover:text-white transition-all duration-500 group rounded-[2rem]">
+                    <div class="mb-8 md:mb-12"><i data-lucide="pen-tool" class="w-10 h-10 md:w-12 md:h-12"></i></div>
+                    <h3 class="text-xl md:text-2xl font-bold mb-4">Graphic Design</h3>
                     <p class="text-sm opacity-60 mb-8">Visual identity, branding, and motion graphics that define your market presence.</p>
                     <ul class="text-[10px] uppercase font-bold tracking-widest space-y-2 opacity-40">
                         <li>· Logo & Identity</li>
                         <li>· Print & Digital</li>
-                        <li>· Illustration</li>
                     </ul>
                 </div>
-                <div class="p-10 border border-black/5 hover:bg-royal-600 hover:text-white transition-all duration-500 group rounded-[2rem]">
-                    <div class="mb-12"><i data-lucide="layout" class="w-12 h-12"></i></div>
-                    <h3 class="text-2xl font-bold mb-4">Web Design</h3>
+                <div class="p-8 md:p-10 border border-black/5 hover:bg-royal-600 hover:text-white transition-all duration-500 group rounded-[2rem]">
+                    <div class="mb-8 md:mb-12"><i data-lucide="layout" class="w-10 h-10 md:w-12 md:h-12"></i></div>
+                    <h3 class="text-xl md:text-2xl font-bold mb-4">Web Design</h3>
                     <p class="text-sm opacity-60 mb-8">Performance-driven UI/UX and scalable architectures for a seamless digital journey.</p>
                     <ul class="text-[10px] uppercase font-bold tracking-widest space-y-2 opacity-40">
                         <li>· Custom Dev</li>
                         <li>· Responsive UI</li>
-                        <li>· E-Commerce</li>
                     </ul>
                 </div>
-                <div class="p-10 border border-black/5 hover:bg-royal-600 hover:text-white transition-all duration-500 group rounded-[2rem]">
-                    <div class="mb-12"><i data-lucide="camera" class="w-12 h-12"></i></div>
-                    <h3 class="text-2xl font-bold mb-4">Content Making</h3>
+                <div class="p-8 md:p-10 border border-black/5 hover:bg-royal-600 hover:text-white transition-all duration-500 group rounded-[2rem]">
+                    <div class="mb-8 md:mb-12"><i data-lucide="camera" class="w-10 h-10 md:w-12 md:h-12"></i></div>
+                    <h3 class="text-xl md:text-2xl font-bold mb-4">Content Making</h3>
                     <p class="text-sm opacity-60 mb-8">Strategic storytelling and media production designed to engage and convert.</p>
                     <ul class="text-[10px] uppercase font-bold tracking-widest space-y-2 opacity-40">
                         <li>· Video Production</li>
                         <li>· Copywriting</li>
-                        <li>· Photography</li>
                     </ul>
                 </div>
-                <div class="p-10 border border-black/5 hover:bg-royal-600 hover:text-white transition-all duration-500 group rounded-[2rem]">
-                    <div class="mb-12"><i data-lucide="trending-up" class="w-12 h-12"></i></div>
-                    <h3 class="text-2xl font-bold mb-4">Digital Marketing</h3>
+                <div class="p-8 md:p-10 border border-black/5 hover:bg-royal-600 hover:text-white transition-all duration-500 group rounded-[2rem]">
+                    <div class="mb-8 md:mb-12"><i data-lucide="trending-up" class="w-10 h-10 md:w-12 md:h-12"></i></div>
+                    <h3 class="text-xl md:text-2xl font-bold mb-4">Digital Marketing</h3>
                     <p class="text-sm opacity-60 mb-8">Data-led campaigns and social strategies to amplify your brand voice globally.</p>
                     <ul class="text-[10px] uppercase font-bold tracking-widest space-y-2 opacity-40">
                         <li>· SEO/SEM</li>
                         <li>· Social Ads</li>
-                        <li>· Growth Hacking</li>
                     </ul>
                 </div>
             </div>
         </div>
     </section>
 
-    <section id="portfolio" class="py-40 px-6">
+    <section id="portfolio" class="py-20 md:py-40 px-6">
         <div class="max-w-[1400px] mx-auto">
-            <div class="flex justify-between items-end mb-32 border-b border-white/10 pb-12">
-                <h2 class="text-6xl md:text-8xl font-black tracking-tighter uppercase">Selected<br>Portfolio</h2>
-                <div class="hidden md:flex gap-4 mb-4">
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-end mb-16 md:mb-32 border-b border-white/10 pb-12 gap-6">
+                <h2 class="text-5xl md:text-8xl font-black tracking-tighter uppercase">Selected<br>Portfolio</h2>
+                <div class="flex flex-wrap gap-4 mb-4">
                     <span class="service-tag text-white bg-royal-600 border-none">All</span>
                     <span class="service-tag text-gray-500">Branding</span>
                     <span class="service-tag text-gray-500">Web</span>
@@ -294,7 +311,7 @@
                 </div>
             </div>
 
-            <div class="grid md:grid-cols-2 gap-x-20 gap-y-40">
+            <div class="grid md:grid-cols-2 gap-x-20 gap-y-20 md:gap-y-40">
                 <div class="project-card group cursor-pointer">
                     <div class="project-image-container aspect-[16/10] bg-gray-900 overflow-hidden mb-8">
                         <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80" class="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110" alt="Web Project">
@@ -302,9 +319,9 @@
                     <div class="flex justify-between items-start">
                         <div class="space-y-2">
                             <p class="text-xs font-bold uppercase tracking-widest text-royal-400">Web Design Portfolio</p>
-                            <h3 class="text-4xl font-bold tracking-tight">Financial Dashboard UI</h3>
+                            <h3 class="text-2xl md:text-4xl font-bold tracking-tight">Financial Dashboard UI</h3>
                         </div>
-                        <div class="w-12 h-12 rounded-full border border-white/20 flex items-center justify-center group-hover:bg-white group-hover:text-black transition-all">
+                        <div class="w-10 h-10 md:w-12 md:h-12 rounded-full border border-white/20 flex items-center justify-center group-hover:bg-white group-hover:text-black transition-all">
                             <i data-lucide="arrow-up-right" class="w-5 h-5"></i>
                         </div>
                     </div>
@@ -317,9 +334,9 @@
                     <div class="flex justify-between items-start">
                         <div class="space-y-2">
                             <p class="text-xs font-bold uppercase tracking-widest text-royal-400">Content & Marketing</p>
-                            <h3 class="text-4xl font-bold tracking-tight">Social Growth Campaign</h3>
+                            <h3 class="text-2xl md:text-4xl font-bold tracking-tight">Social Growth Campaign</h3>
                         </div>
-                        <div class="w-12 h-12 rounded-full border border-white/20 flex items-center justify-center group-hover:bg-white group-hover:text-black transition-all">
+                        <div class="w-10 h-10 md:w-12 md:h-12 rounded-full border border-white/20 flex items-center justify-center group-hover:bg-white group-hover:text-black transition-all">
                             <i data-lucide="arrow-up-right" class="w-5 h-5"></i>
                         </div>
                     </div>
@@ -328,43 +345,43 @@
         </div>
     </section>
 
-    <section class="py-40 px-6 bg-black relative overflow-hidden" id="stats">
-        <div class="max-w-7xl mx-auto flex flex-wrap justify-between gap-20 relative z-10">
-            <div class="space-y-4 border-l border-royal-600/30 pl-8">
-                <span class="text-8xl font-black block counter" data-target="98">0%</span>
-                <p class="text-gray-500 font-bold uppercase tracking-widest text-xs">Satisfaction Rate</p>
+    <section class="py-20 md:py-40 px-6 bg-black relative overflow-hidden" id="stats">
+        <div class="max-w-7xl mx-auto flex flex-wrap justify-center md:justify-between gap-12 md:gap-20 relative z-10">
+            <div class="space-y-2 md:space-y-4 border-l border-royal-600/30 pl-6 md:pl-8">
+                <span class="text-5xl md:text-8xl font-black block counter" data-target="98">0%</span>
+                <p class="text-gray-500 font-bold uppercase tracking-widest text-[10px] md:text-xs">Satisfaction Rate</p>
             </div>
-            <div class="space-y-4 border-l border-royal-600/30 pl-8">
-                <span class="text-8xl font-black block counter" data-target="250">0+</span>
-                <p class="text-gray-500 font-bold uppercase tracking-widest text-xs">Designers Network</p>
+            <div class="space-y-2 md:space-y-4 border-l border-royal-600/30 pl-6 md:pl-8">
+                <span class="text-5xl md:text-8xl font-black block counter" data-target="250">0+</span>
+                <p class="text-gray-500 font-bold uppercase tracking-widest text-[10px] md:text-xs">Designers Network</p>
             </div>
-            <div class="space-y-4 border-l border-royal-600/30 pl-8">
-                <span class="text-8xl font-black block counter" data-target="15">0+</span>
-                <p class="text-gray-500 font-bold uppercase tracking-widest text-xs">Industry Awards</p>
+            <div class="space-y-2 md:space-y-4 border-l border-royal-600/30 pl-6 md:pl-8">
+                <span class="text-5xl md:text-8xl font-black block counter" data-target="15">0+</span>
+                <p class="text-gray-500 font-bold uppercase tracking-widest text-[10px] md:text-xs">Industry Awards</p>
             </div>
         </div>
         <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-[20vw] font-black text-white/5 whitespace-nowrap pointer-events-none select-none">
-            EXEVO PERFORMANCE
+            PERFORMANCE
         </div>
     </section>
 
-    <section id="academy" class="py-40 px-6 bg-royal-600 text-white text-center rounded-t-[4rem]">
-        <div class="max-w-4xl mx-auto space-y-12">
-            <span class="text-xs font-bold uppercase tracking-[0.5em] opacity-60">Exevo Academy</span>
-            <h2 class="text-5xl md:text-8xl font-black tracking-tighter uppercase leading-[0.9]">Elevate Your <br> Creative Future</h2>
-            <p class="text-xl opacity-80 leading-relaxed max-w-2xl mx-auto">
-                Join 250+ professionals learning the skills that power today's digital economy. From branding to growth hacking.
+    <section id="academy" class="py-20 md:py-40 px-6 bg-royal-600 text-white text-center rounded-t-[2rem] md:rounded-t-[4rem]">
+        <div class="max-w-4xl mx-auto space-y-8 md:space-y-12">
+            <span class="text-[10px] md:text-xs font-bold uppercase tracking-[0.5em] opacity-60">Exevo Academy</span>
+            <h2 class="text-4xl md:text-8xl font-black tracking-tighter uppercase leading-[1]">Elevate Your <br> Creative Future</h2>
+            <p class="text-lg md:text-xl opacity-80 leading-relaxed max-w-2xl mx-auto">
+                Join 250+ professionals learning the skills that power today's digital economy.
             </p>
-            <div class="flex flex-wrap justify-center gap-6">
-                <button onclick="window.location.href='student page.html'" class="px-12 py-6 bg-white text-black rounded-full font-bold text-lg hover:bg-black hover:text-white transition-all duration-500">Join the Academy</button>
-                <button onclick="window.location.href='contact.html'" class="px-12 py-6 bg-transparent border-2 border-white rounded-full font-bold text-lg hover:bg-white hover:text-black transition-all duration-500">Hire a Designer</button>
+            <div class="flex flex-col sm:flex-row justify-center gap-4 md:gap-6">
+                <button onclick="window.location.href='student page.html'" class="px-8 md:px-12 py-4 md:py-6 bg-white text-black rounded-full font-bold text-base md:text-lg hover:bg-black hover:text-white transition-all duration-500">Join the Academy</button>
+                <button onclick="window.location.href='contact.html'" class="px-8 md:px-12 py-4 md:py-6 bg-transparent border-2 border-white rounded-full font-bold text-base md:text-lg hover:bg-white hover:text-black transition-all duration-500">Hire a Designer</button>
             </div>
         </div>
     </section>
 
-    <footer class="py-20 px-6 bg-black">
-        <div class="max-w-[1400px] mx-auto grid md:grid-cols-4 gap-20 border-b border-white/5 pb-20 mb-20">
-            <div class="col-span-2 space-y-8">
+    <footer class="py-16 md:py-20 px-6 bg-black">
+        <div class="max-w-[1400px] mx-auto grid md:grid-cols-2 lg:grid-cols-4 gap-12 md:gap-20 border-b border-white/5 pb-16 md:pb-20 mb-16 md:mb-20">
+            <div class="lg:col-span-2 space-y-8">
                 <div class="flex items-center gap-3">
                     <div class="w-10 h-10 bg-white text-black rounded-full flex items-center justify-center"><i data-lucide="zap" class="w-5 h-5"></i></div>
                     <span class="text-2xl font-black tracking-tighter">EXEVO</span>
@@ -385,7 +402,7 @@
                 <ul class="text-sm text-gray-500 space-y-4">
                     <li class="flex items-center gap-2">
                         <i data-lucide="mail" class="w-4 h-4"></i>
-                        <a href="mailto:info@exevodesigners.com" class="hover:text-white transition-colors">info@exevodesigners.com</a>
+                        <a href="mailto:exevodesigners@gmail.com" class="hover:text-white transition-colors">exevodesigners@gmail.com</a>
                     </li>
                     <li class="flex items-center gap-2">
                         <i data-lucide="phone" class="w-4 h-4"></i>
@@ -393,20 +410,17 @@
                     </li>
                     <li class="flex items-center gap-2">
                         <i data-lucide="map-pin" class="w-4 h-4"></i>
-                        <span>Nairobi, Kenya</span>
-                    </li>
-                    <li class="flex gap-4 pt-4">
-                        <i data-lucide="instagram" class="w-5 h-5 cursor-pointer hover:text-white"></i>
-                        <i data-lucide="linkedin" class="w-5 h-5 cursor-pointer hover:text-white"></i>
-                        <i data-lucide="twitter" class="w-5 h-5 cursor-pointer hover:text-white"></i>
+                        <span>Narok, Kenya</span>
                     </li>
                 </ul>
             </div>
         </div>
         <div class="max-w-[1400px] mx-auto flex flex-col md:flex-row justify-between items-center gap-6 text-[10px] font-bold uppercase tracking-widest text-gray-600">
-            <p>© 2025 EXEVO DESIGNERS NETWORK. ALL RIGHTS RESERVED.</p>
-            <a href="#" class="hover:text-white">Privacy Policy</a>
-            <a href="#" class="hover:text-white">Terms of Service</a>
+            <p>© 2025 EXEVO DESIGNERS NETWORK.</p>
+            <div class="flex gap-6">
+                <a href="#" class="hover:text-white">Privacy Policy</a>
+                <a href="#" class="hover:text-white">Terms</a>
+            </div>
         </div>
     </footer>
 
@@ -446,7 +460,7 @@
         window.addEventListener('scroll', () => {
             const nav = document.getElementById('navbar');
             if (window.scrollY > 100) {
-                nav.style.background = 'rgba(3, 3, 13, 0.8)';
+                nav.style.background = 'rgba(3, 3, 13, 0.95)';
                 nav.style.backdropFilter = 'blur(10px)';
                 nav.style.paddingTop = '1rem';
                 nav.style.paddingBottom = '1rem';
@@ -458,18 +472,41 @@
             }
         });
 
+        // Mobile Menu Toggle Logic
+        const menuBtn = document.getElementById('menu-btn');
+        const closeMenu = document.getElementById('close-menu');
+        const mobileOverlay = document.getElementById('mobile-overlay');
+        const mobileLinks = document.querySelectorAll('.mobile-link');
+
+        menuBtn.addEventListener('click', () => {
+            mobileOverlay.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        });
+
+        const closeFunc = () => {
+            mobileOverlay.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        };
+
+        closeMenu.addEventListener('click', closeFunc);
+        mobileLinks.forEach(link => link.addEventListener('click', closeFunc));
+
         // Counter Logic
         const startCounters = () => {
             const counters = document.querySelectorAll('.counter');
             counters.forEach(counter => {
                 const target = parseInt(counter.getAttribute('data-target'));
                 let count = 0;
-                const speed = 1500 / target;
+                const duration = 2000;
+                const increment = target / (duration / 16);
+                
                 const update = () => {
+                    count += increment;
                     if (count < target) {
-                        count++;
-                        counter.innerText = count + (target === 98 ? '%' : '+');
-                        setTimeout(update, speed);
+                        counter.innerText = Math.floor(count) + (target === 98 ? '%' : '+');
+                        requestAnimationFrame(update);
+                    } else {
+                        counter.innerText = target + (target === 98 ? '%' : '+');
                     }
                 };
                 update();
@@ -485,7 +522,8 @@
             });
         }, { threshold: 0.5 });
 
-        observer.observe(document.getElementById('stats'));
+        const statsSection = document.getElementById('stats');
+        if (statsSection) observer.observe(statsSection);
     </script>
 </body>
 </html>
