@@ -32,71 +32,29 @@
     </script>
     <style>
         body { background-color: #03030d; color: white; width: 100%; overflow-x: hidden; }
-        
-        /* Smooth interactions & Glassmorphism */
-        .glass-card {
-            background: rgba(255, 255, 255, 0.02);
-            backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.08);
+        .glass-card { background: rgba(255, 255, 255, 0.02); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.08); }
+        .form-input { 
+            background: transparent; 
+            border: none; 
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1); 
+            border-radius: 0; 
+            padding-left: 0; 
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); 
+            color: white; 
         }
-        
-        .form-input {
-            background: transparent;
-            border: none;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 0;
-            padding-left: 0;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            color: white;
-        }
-        
-        .form-input:focus {
-            border-bottom-color: #6366f1;
-            outline: none;
-            box-shadow: none;
-            padding-left: 8px;
-        }
-
-        .royal-gradient {
-            background: linear-gradient(135deg, #6366f1 0%, #a855f7 100%);
-        }
-
-        /* Custom Select Styling */
-        select.form-input {
-            appearance: none;
+        .form-input:focus { border-bottom-color: #6366f1; outline: none; padding-left: 8px; }
+        .royal-gradient { background: linear-gradient(135deg, #6366f1 0%, #a855f7 100%); }
+        select.form-input { 
+            appearance: none; 
             background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='white'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E");
             background-repeat: no-repeat;
             background-position: right center;
             background-size: 1.2em;
         }
-        select.form-input option {
-            background-color: #03030d;
-            color: white;
-        }
-
-        /* Responsive menu clip path */
-        #mobile-menu-overlay {
-            clip-path: circle(0% at 100% 0%);
-            transition: clip-path 0.6s cubic-bezier(0.77, 0, 0.175, 1);
-        }
-        #mobile-menu-overlay.active {
-            clip-path: circle(150% at 100% 0%);
-        }
-
-        .logo-box {
-            height: 42px;
-            width: auto;
-            display: flex;
-            align-items: center;
-        }
-        @media (min-width: 768px) { .logo-box { height: 48px; } }
-        @media (min-width: 1024px) { .logo-box { height: 56px; } }
-        
-        .logo-img { height: 100%; width: auto; object-fit: contain; }
-
-        .hero-title {
-            font-size: clamp(3rem, 10vw, 8rem);
-        }
+        select.form-input option { background-color: #03030d; color: white; }
+        #mobile-menu-overlay { clip-path: circle(0% at 100% 0%); transition: clip-path 0.6s cubic-bezier(0.77, 0, 0.175, 1); }
+        #mobile-menu-overlay.active { clip-path: circle(150% at 100% 0%); }
+        .hero-title { font-size: clamp(3rem, 10vw, 8rem); }
     </style>
 </head>
 <body class="antialiased">
@@ -122,8 +80,15 @@
     <!-- Navbar -->
     <nav id="navbar" class="fixed top-0 w-full z-40 transition-all duration-300 py-6 md:py-8 px-6">
         <div class="max-w-7xl mx-auto flex justify-between items-center">
-            <a href="index.html" class="logo-box group">
-                <img src="logo/exevo logo.svg" alt="Exevo Logo" class="logo-img transition-transform duration-300 group-hover:scale-110" onerror="this.src='https://api.dicebear.com/7.x/initials/svg?seed=EX&backgroundColor=6366f1&fontFamily=Arial&fontWeight=800'">
+            <!-- Header Logo (Matching index.html) -->
+            <a href="index.html" class="flex items-center gap-3 group relative z-50">
+                <div class="w-10 h-10 bg-gradient-to-tr from-royal-600 to-royal-400 rounded-xl flex items-center justify-center shadow-lg shadow-royal-500/20 group-hover:scale-110 transition-transform duration-300 overflow-hidden p-1.5">
+                    <img src="logo/exevo logo.svg" alt="Exevo Logo" class="w-full h-full brightness-0 invert object-contain">
+                </div>
+                <div class="flex flex-col">
+                    <span class="text-xl font-bold text-white tracking-tight leading-none group-hover:text-royal-400 transition-colors">EXEVO</span>
+                    <span class="text-[10px] uppercase tracking-[0.2em] text-royal-400 font-bold">Academy</span>
+                </div>
             </a>
             
             <div class="hidden lg:flex items-center gap-8">
@@ -198,7 +163,7 @@
                                 </select>
                             </div>
 
-                            <!-- Tier Selection with Dynamic Pricing -->
+                            <!-- Tier Selection -->
                             <div class="md:col-span-2 space-y-1">
                                 <label class="text-[10px] font-bold uppercase tracking-widest text-royal-400">05. Which tier are you applying for?</label>
                                 <select name="tier" id="tier-select" class="w-full py-4 form-input text-lg md:text-xl" required>
@@ -241,12 +206,19 @@
     </main>
 
     <!-- Footer -->
-    <footer class="py-16 md:py-24 px-6 bg-black">
-        <div class="max-w-7xl mx-auto grid md:grid-cols-2 lg:grid-cols-4 gap-12 md:gap-20 border-b border-white/5 pb-16 md:pb-24 mb-12">
+    <footer class="py-16 md:py-24 px-6 bg-black border-t border-white/5">
+        <div class="max-w-7xl mx-auto grid md:grid-cols-2 lg:grid-cols-4 gap-12 md:gap-20 pb-16 md:pb-24 mb-12 border-b border-white/5">
             <div class="lg:col-span-2 space-y-8">
-                <div class="logo-box">
-                    <img src="logo/exevo logo.svg" alt="Exevo Logo" class="logo-img" onerror="this.src='https://api.dicebear.com/7.x/initials/svg?seed=EX&backgroundColor=6366f1&fontFamily=Arial&fontWeight=800'">
-                </div>
+                <!-- Footer Logo (Matching index.html) -->
+                <a href="index.html" class="flex items-center gap-3 group">
+                    <div class="w-10 h-10 bg-gradient-to-tr from-royal-600 to-royal-400 rounded-xl flex items-center justify-center shadow-lg shadow-royal-500/10 p-1.5">
+                        <img src="logo/exevo logo.svg" alt="Exevo Logo" class="w-full h-full brightness-0 invert object-contain">
+                    </div>
+                    <div class="flex flex-col">
+                        <span class="text-xl font-bold text-white tracking-tight leading-none group-hover:text-royal-400 transition-colors">EXEVO</span>
+                        <span class="text-[10px] uppercase tracking-[0.2em] text-royal-400 font-bold">Academy</span>
+                    </div>
+                </a>
                 <p class="text-gray-500 max-w-sm text-sm leading-relaxed">Elevating brands through high-performance design, strategic content, and a world-class creative network.</p>
             </div>
             
@@ -274,8 +246,8 @@
             </div>
         </div>
         
-        <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6 text-[10px] font-bold uppercase tracking-widest text-gray-600 text-center md:text-left">
-            <p>© 2026 EXEVO DESIGNERS NETWORK.</p>
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6 text-[10px] font-bold uppercase tracking-widest text-gray-600">
+            <p>© 2026 EXEVO DESIGNERS NETWORK. ALL RIGHTS RESERVED.</p>
             <div class="flex gap-8">
                 <a href="#" class="hover:text-white transition-colors">Privacy</a>
                 <a href="#" class="hover:text-white transition-colors">Terms</a>
@@ -286,7 +258,6 @@
     <script>
         lucide.createIcons();
 
-        // Responsive Country & Currency Configuration
         const countries = [
             "Afghanistan", "Albania", "Algeria", "Andorra", "Angola", "Argentina", "Armenia", "Australia", "Austria", "Azerbaijan", 
             "Bahamas", "Bahrain", "Bangladesh", "Barbados", "Belarus", "Belgium", "Belize", "Benin", "Bermuda", "Bhutan", "Bolivia", 
@@ -320,10 +291,6 @@
             "United States": { sym: "USD $", p: 115, n: 195 },
             "United Kingdom": { sym: "GBP £", p: 90, n: 150 },
             "Germany": { sym: "EUR €", p: 105, n: 175 },
-            "France": { sym: "EUR €", p: 105, n: 175 },
-            "Italy": { sym: "EUR €", p: 105, n: 175 },
-            "Spain": { sym: "EUR €", p: 105, n: 175 },
-            "Netherlands": { sym: "EUR €", p: 105, n: 175 },
             "India": { sym: "INR ₹", p: 9600, n: 16000 }
         };
 
@@ -332,7 +299,6 @@
         const countrySelect = document.getElementById('country-select');
         const tierSelect = document.getElementById('tier-select');
 
-        // Populate Country Dropdown
         countries.forEach(country => {
             const opt = document.createElement('option');
             opt.value = country;
@@ -341,20 +307,16 @@
             countrySelect.appendChild(opt);
         });
 
-        // Update Prices
         function updatePricing() {
             const country = countrySelect.value;
             const data = currencyMap[country] || defaultCurrency;
-            
             const options = tierSelect.options;
-            // Update the text content of options while preserving the values
             options[1].textContent = `The Practitioner (${data.sym} ${data.p.toLocaleString()})`;
             options[2].textContent = `The Pro Network (${data.sym} ${data.n.toLocaleString()})`;
         }
 
         countrySelect.addEventListener('change', updatePricing);
 
-        // Responsive Navigation Logic
         const hamburgerBtn = document.getElementById('hamburger-btn');
         const closeMenuBtn = document.getElementById('close-menu');
         const mobileOverlay = document.getElementById('mobile-menu-overlay');
@@ -367,7 +329,6 @@
         hamburgerBtn.addEventListener('click', toggleMenu);
         closeMenuBtn.addEventListener('click', toggleMenu);
 
-        // Sticky Navbar Behavior
         window.addEventListener('scroll', () => {
             const nav = document.getElementById('navbar');
             if (window.scrollY > 50) {
@@ -383,7 +344,6 @@
             }
         });
 
-        // Initialize form view
         window.onload = updatePricing;
     </script>
 </body>
