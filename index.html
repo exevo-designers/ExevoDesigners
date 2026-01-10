@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exevo Designers Network | Premium Creative Agency & Academy</title>
+    
+    <!-- FAVICON -->
+    <link rel="icon" type="image/svg+xml" href="logo/exevo logo.svg">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Plus Jakarta Sans', 'sans-serif'],
+                    },
+                    colors: {
+                        royal: {
+                            50: '#eef2ff', 100: '#e0e7ff', 400: '#818cf8',
+                            500: '#6366f1', 600: '#4f46e5', 700: '#4338ca',
+                            800: '#3730a3', 900: '#1e1b4b', 950: '#03030d', 
+                        }
+                    },
+                    animation: {
+                        'slow-spin': 'spin 20s linear infinite',
+                        'reveal': 'reveal 1.2s cubic-bezier(0.77, 0, 0.175, 1) forwards',
+                        'marquee': 'marquee 25s linear infinite',
+                    },
+                    keyframes: {
+                        reveal: {
+                            '0%': { transform: 'translateY(100%)', opacity: '0' },
+                            '100%': { transform: 'translateY(0)', opacity: '1' },
+                        },
+                        marquee: {
+                            '0%': { transform: 'translateX(0%)' },
+                            '100%': { transform: 'translateX(-50%)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background-color: #03030d;
+            color: #eef2ff;
+            cursor: none;
+            overflow-x: hidden;
+            width: 100%;
+        }
+        @media (max-width: 1024px) { 
+            body { cursor: auto; } 
+            #cursor, #cursor-ring { display: none; } 
+        }
+
+        .glass {
+            background: rgba(3, 3, 13, 0.85);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .hero-text {
+            font-size: clamp(2.5rem, 12vw, 9rem);
+            line-height: 0.9;
+            letter-spacing: -0.05em;
+            font-weight: 800;
+            text-transform: uppercase;
+        }
+
+        .outline-text {
+            color: transparent;
+            -webkit-text-stroke: 1px rgba(255,255,255,0.3);
+        }
+
+        #cursor {
+            width: 8px; height: 8px; background: white; border-radius: 50%;
+            position: fixed; pointer-events: none; z-index: 10000;
+            transition: transform 0.1s ease;
+        }
+
+        #cursor-ring {
+            width: 40px; height: 40px; border: 1px solid rgba(255,255,255,0.2); border-radius: 50%;
+            position: fixed; pointer-events: none; z-index: 9999;
+            transition: all 0.15s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+
+        .project-image-container {
+            clip-path: inset(0% 0% 0% 0% round 1.5rem);
+            transition: clip-path 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .project-card:hover .project-image-container {
+            clip-path: inset(2% 2% 2% 2% round 2.5rem);
+        }
+
+        .mask-reveal { overflow: hidden; }
+        .mask-reveal span {
+            display: inline-block;
+            animation: reveal 1.2s cubic-bezier(0.77, 0, 0.175, 1) forwards;
+        }
+
+        .blob {
+            position: absolute;
+            filter: blur(140px);
+            z-index: -1;
+            opacity: 0.3;
+        }
+
+        #mobile-overlay {
+            clip-path: circle(0% at 100% 0%);
+            transition: clip-path 0.6s cubic-bezier(0.77, 0, 0.175, 1);
+        }
+        #mobile-overlay.active {
+            clip-path: circle(150% at 100% 0%);
+        }
+
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #03030d; }
+        ::-webkit-scrollbar-thumb { background: #4f46e5; border-radius: 10px; }
+
+        .logo-container {
+            width: 3.5rem;
+            height: 3.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .logo-img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+    </style>
+</head>
+<body class="font-sans antialiased dark overflow-x-hidden">
+
+    <div id="cursor"></div>
+    <div id="cursor-ring"></div>
+
+    <!-- Mobile Menu Overlay -->
+    <div id="mobile-overlay" class="fixed inset-0 bg-royal-950 z-[100] lg:hidden flex flex-col justify-center items-center p-6">
+        <button id="close-menu" class="absolute top-8 right-8 text-white p-2">
+            <i data-lucide="x" class="w-10 h-10"></i>
+        </button>
+        <nav class="flex flex-col gap-6 text-center">
+            <a href="portfolio.html" class="text-4xl font-bold hover:text-royal-400 mobile-link">Portfolio</a>
+            <a href="student page.html" class="mobile-link text-4xl font-bold hover:text-royal-400">Academy</a>
+            <a href="#services" class="mobile-link text-4xl font-bold hover:text-royal-400">Services</a>
+            <a href="contact.html" class="mt-4 px-10 py-5 bg-royal-600 text-white rounded-full font-bold mobile-link">Contact Us</a>
+        </nav>
+    </div>
+
+    <!-- Background Animation Blobs -->
+    <div class="blob w-[300px] md:w-[600px] h-[300px] md:h-[600px] bg-royal-600 top-[-10%] left-[-10%] animate-slow-spin"></div>
+    <div class="blob w-[300px] md:w-[500px] h-[300px] md:h-[500px] bg-indigo-900 bottom-[10%] right-[-5%]"></div>
+
+    <!-- Navigation Header -->
+    <nav class="fixed top-0 w-full z-50 px-6 py-4 md:py-6 transition-all duration-500" id="navbar">
+        <div class="max-w-[1440px] mx-auto flex items-center justify-between">
+            <a href="index.html" class="flex items-center group cursor-pointer">
+                <div class="logo-container transition-transform group-hover:scale-110">
+                    <img src="logo/exevo logo.svg" alt="Logo" class="logo-img" onerror="this.src='https://api.dicebear.com/7.x/initials/svg?seed=EX&backgroundColor=4f46e5&fontFamily=Arial&fontWeight=800'">
+                </div>
+            </a>
+
+            <!-- Desktop Nav Links -->
+            <div class="hidden lg:flex gap-8 xl:gap-12 items-center text-[11px] font-bold uppercase tracking-[0.2em]">
+                <a href="portfolio.html" class="hover:text-royal-400 transition-colors">Portfolio</a>
+                <a href="#services" class="hover:text-white/70 transition-colors">Services</a>
+                <a href="#about" class="hover:text-white/70 transition-colors">About</a>
+                <a href="student page.html" class="hover:text-royal-400 transition-colors">Academy</a>
+                <a href="contact.html" class="px-8 py-4 bg-royal-600 text-white rounded-full hover:bg-white hover:text-black transition-all duration-500 border border-transparent">Contact Us</a>
+            </div>
+
+            <!-- Hamburger Button -->
+            <button id="menu-btn" class="lg:hidden w-10 h-10 flex items-center justify-center p-2">
+                <i data-lucide="menu" class="w-8 h-8"></i>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="min-h-screen pt-32 pb-20 px-6 relative flex flex-col justify-center overflow-hidden">
+        <div class="max-w-[1440px] mx-auto w-full">
+            <div class="mask-reveal mb-6 md:mb-8 flex flex-col md:flex-row md:items-center gap-6">
+                <span class="text-royal-400 font-bold uppercase tracking-[0.4em] text-[10px] md:text-sm">Design · Marketing · Academy</span>
+                
+                <div class="flex items-center">
+                    <div class="flex -space-x-3 overflow-hidden">
+                        <img class="inline-block h-8 w-8 md:h-10 md:w-10 rounded-full ring-2 ring-royal-950 object-cover" src="profiles/Vince Graphics Logo_MAIN LOGO.jpg" alt="Designer">
+                        <img class="inline-block h-8 w-8 md:h-10 md:w-10 rounded-full ring-2 ring-royal-950 object-cover" src="profiles/Vince Graphics Logo_MAIN LOGO.jpg" alt="Designer">
+                        <img class="inline-block h-8 w-8 md:h-10 md:w-10 rounded-full ring-2 ring-royal-950 object-cover" src="profiles/EN Profile Photo.jpg" alt="Designer">
+                        <div class="flex items-center justify-center h-8 w-8 md:h-10 md:w-10 rounded-full ring-2 ring-royal-950 bg-royal-600 text-[10px] font-bold">250+</div>
+                    </div>
+                    <div class="ml-4">
+                        <p class="text-[10px] font-bold uppercase tracking-wider text-white/50">Elite Network members</p>
+                    </div>
+                </div>
+            </div>
+            
+            <h1 class="hero-text mb-8 md:mb-12">
+                <div class="mask-reveal"><span>Exevo</span></div>
+                <div class="mask-reveal flex flex-wrap items-center gap-3 md:gap-8">
+                    <span class="outline-text">Designers</span>
+                    <div class="w-12 h-6 md:w-32 md:h-16 lg:w-40 lg:h-20 bg-royal-600 rounded-full inline-block align-middle animate-pulse"></div>
+                </div>
+                <div class="mask-reveal"><span>Network</span></div>
+            </h1>
+
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-end gap-10 mt-6">
+                <div class="max-w-xl">
+                    <p class="text-lg md:text-2xl text-gray-300 leading-relaxed font-light mb-8">
+                        Empowering the next generation of creatives through our <span class="text-white font-semibold">global network</span> and industry-leading <a href="student page.html" class="text-royal-400 hover:text-white underline decoration-royal-600 underline-offset-4">academy</a>.
+                    </p>
+                    <div class="flex gap-6">
+                        <button class="flex items-center gap-4 group">
+                            <span class="w-12 h-12 rounded-full bg-white text-black flex items-center justify-center group-hover:bg-royal-600 group-hover:text-white transition-all">
+                                <i data-lucide="play" class="w-4 h-4 fill-current"></i>
+                            </span>
+                            <span class="text-[10px] font-bold uppercase tracking-widest">Watch Showreel</span>
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="flex flex-wrap gap-8 md:gap-12 border-t border-white/10 pt-8 w-full md:w-auto">
+                    <div>
+                        <p class="text-[9px] uppercase tracking-widest text-gray-500 font-bold mb-1">Location</p>
+                        <p class="font-semibold italic text-sm">Narok, Kenya — Global</p>
+                    </div>
+                    <div>
+                        <p class="text-[9px] uppercase tracking-widest text-gray-500 font-bold mb-1">Network</p>
+                        <p class="font-semibold italic text-sm">250+ Elite Designers</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Scrolling Marquee -->
+    <div class="py-8 md:py-12 border-y border-white/5 overflow-hidden flex whitespace-nowrap bg-white/[0.02]">
+        <div class="flex animate-marquee gap-12 md:gap-24 items-center">
+            <span class="text-xl md:text-4xl font-black uppercase opacity-20">Graphic Design</span>
+            <span class="text-xl md:text-4xl font-black uppercase opacity-20">Web Development</span>
+            <span class="text-xl md:text-4xl font-black uppercase opacity-20">Content Strategy</span>
+            <span class="text-xl md:text-4xl font-black uppercase opacity-20">Digital Marketing</span>
+            <span class="text-xl md:text-4xl font-black uppercase opacity-20">Creative Academy</span>
+            <span class="text-xl md:text-4xl font-black uppercase opacity-20">Graphic Design</span>
+            <span class="text-xl md:text-4xl font-black uppercase opacity-20">Web Development</span>
+            <span class="text-xl md:text-4xl font-black uppercase opacity-20">Content Strategy</span>
+        </div>
+    </div>
+
+    <!-- About Section -->
+    <section id="about" class="py-24 md:py-48 px-6 overflow-hidden">
+        <div class="max-w-[1440px] mx-auto grid lg:grid-cols-2 gap-16 md:gap-24 items-center">
+            <div class="space-y-8 md:space-y-12 order-2 lg:order-1">
+                <h2 class="text-4xl md:text-7xl lg:text-8xl font-black tracking-tighter uppercase leading-[0.9]">We Build <br> <span class="text-royal-500 italic">Communities</span> <br> Not Just Sites</h2>
+                <p class="text-lg md:text-xl text-gray-400 leading-relaxed max-w-xl">
+                    Exevo Designers is more than an agency. We are a community hub and marketplace designed to showcase elite talent while driving revenue for brands who demand excellence.
+                </p>
+                <div class="grid sm:grid-cols-2 gap-6 pt-4">
+                    <div class="glass p-8 rounded-[2rem] space-y-4">
+                        <i data-lucide="target" class="text-royal-400 w-8 h-8"></i>
+                        <h4 class="font-bold uppercase tracking-widest text-xs">Our Mission</h4>
+                        <p class="text-sm text-gray-400">Cultivating a world-class network through impactful collaboration and innovation.</p>
+                    </div>
+                    <div class="glass p-8 rounded-[2rem] space-y-4">
+                        <i data-lucide="eye" class="text-royal-400 w-8 h-8"></i>
+                        <h4 class="font-bold uppercase tracking-widest text-xs">Our Vision</h4>
+                        <p class="text-sm text-gray-400">Becoming the global benchmark for creative professional networking.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="relative group order-1 lg:order-2">
+                <div class="absolute -inset-4 bg-royal-600/20 rounded-[3rem] blur-2xl group-hover:bg-royal-600/30 transition-all"></div>
+                <div class="overflow-hidden rounded-[2.5rem] md:rounded-[4rem] aspect-[4/5] md:aspect-square">
+                    <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&q=80" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-1000 scale-105 group-hover:scale-100" alt="Exevo Team Collaboration">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services" class="py-24 md:py-48 px-6 bg-white text-black rounded-[3rem] md:rounded-[5rem] relative z-10 mx-2 md:mx-4">
+        <div class="max-w-[1440px] mx-auto">
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-end mb-16 md:mb-32 gap-8">
+                <h2 class="text-5xl md:text-8xl font-black tracking-tighter uppercase leading-[0.85]">Core<br>Expertise</h2>
+                <p class="max-w-xs text-[10px] font-bold uppercase tracking-widest leading-loose text-gray-400">
+                    A comprehensive suite of high-end digital solutions for modern market leaders.
+                </p>
+            </div>
+
+            <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
+                <!-- Graphic Design -->
+                <div class="p-10 border border-black/5 hover:bg-royal-600 hover:text-white transition-all duration-700 group rounded-[2.5rem] flex flex-col justify-between h-[400px]">
+                    <div>
+                        <div class="mb-12"><i data-lucide="pen-tool" class="w-12 h-12"></i></div>
+                        <h3 class="text-2xl md:text-3xl font-bold mb-4">Graphic Design</h3>
+                        <p class="text-sm opacity-60">Visual identity and branding that define your market presence.</p>
+                    </div>
+                    <ul class="text-[10px] uppercase font-bold tracking-widest space-y-2 opacity-40">
+                        <li>· Brand Identity</li>
+                        <li>· Motion Design</li>
+                    </ul>
+                </div>
+                <!-- Web Design -->
+                <div class="p-10 border border-black/5 hover:bg-royal-600 hover:text-white transition-all duration-700 group rounded-[2.5rem] flex flex-col justify-between h-[400px]">
+                    <div>
+                        <div class="mb-12"><i data-lucide="layout" class="w-12 h-12"></i></div>
+                        <h3 class="text-2xl md:text-3xl font-bold mb-4">Web Design</h3>
+                        <p class="text-sm opacity-60">Performance-driven UI/UX and scalable digital architectures.</p>
+                    </div>
+                    <ul class="text-[10px] uppercase font-bold tracking-widest space-y-2 opacity-40">
+                        <li>· Custom Dev</li>
+                        <li>· eCommerce</li>
+                    </ul>
+                </div>
+                <!-- Content -->
+                <div class="p-10 border border-black/5 hover:bg-royal-600 hover:text-white transition-all duration-700 group rounded-[2.5rem] flex flex-col justify-between h-[400px]">
+                    <div>
+                        <div class="mb-12"><i data-lucide="camera" class="w-12 h-12"></i></div>
+                        <h3 class="text-2xl md:text-3xl font-bold mb-4">Content</h3>
+                        <p class="text-sm opacity-60">Strategic storytelling designed to engage and convert.</p>
+                    </div>
+                    <ul class="text-[10px] uppercase font-bold tracking-widest space-y-2 opacity-40">
+                        <li>· Video Production</li>
+                        <li>· Photography</li>
+                    </ul>
+                </div>
+                <!-- Marketing -->
+                <div class="p-10 border border-black/5 hover:bg-royal-600 hover:text-white transition-all duration-700 group rounded-[2.5rem] flex flex-col justify-between h-[400px]">
+                    <div>
+                        <div class="mb-12"><i data-lucide="trending-up" class="w-12 h-12"></i></div>
+                        <h3 class="text-2xl md:text-3xl font-bold mb-4">Marketing</h3>
+                        <p class="text-sm opacity-60">Data-led campaigns to amplify your brand voice globally.</p>
+                    </div>
+                    <ul class="text-[10px] uppercase font-bold tracking-widest space-y-2 opacity-40">
+                        <li>· SEO/SEM</li>
+                        <li>· Social Ads</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Portfolio Preview -->
+    <section id="portfolio" class="py-24 md:py-48 px-6">
+        <div class="max-w-[1440px] mx-auto">
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-end mb-16 md:mb-32 border-b border-white/10 pb-12 gap-6">
+                <h2 class="text-5xl md:text-8xl font-black tracking-tighter uppercase leading-[0.85]">Selected<br>Works</h2>
+                <a href="portfolio.html" class="px-8 py-4 border border-white/20 rounded-full text-xs font-bold uppercase tracking-widest hover:bg-white hover:text-black transition-all">View All Work</a>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-x-12 lg:gap-x-24 gap-y-20 md:gap-y-40">
+                <!-- Project 1: JeanYarn Haven -->
+                <a href="https://exevo-designers.github.io/JeanYarnHaven/" target="_blank" class="project-card group cursor-pointer">
+                    <div class="project-image-container aspect-[16/10] bg-gray-900 overflow-hidden mb-8">
+                        <img src="https://images.unsplash.com/photo-1528476513691-07e6f563d97f?auto=format&fit=crop&q=80" class="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110" alt="JeanYarn Haven E-commerce Project">
+                    </div>
+                    <div class="flex justify-between items-start">
+                        <div class="space-y-2">
+                            <p class="text-[10px] font-bold uppercase tracking-widest text-royal-400">E-commerce Architecture</p>
+                            <h3 class="text-2xl md:text-4xl font-bold tracking-tight">JeanYarn Haven</h3>
+                        </div>
+                        <div class="w-12 h-12 rounded-full border border-white/20 flex items-center justify-center group-hover:bg-white group-hover:text-black transition-all">
+                            <i data-lucide="arrow-up-right" class="w-5 h-5"></i>
+                        </div>
+                    </div>
+                </a>
+
+                <!-- Project 2: BlueMotion Engineering -->
+                <a href="https://exevo-designers.github.io/BlueMotionEngineering/" target="_blank" class="project-card group cursor-pointer md:mt-40">
+                    <div class="project-image-container aspect-[16/10] bg-gray-900 overflow-hidden mb-8">
+                        <img src="https://images.unsplash.com/photo-1581092160562-40aa08e78837?auto=format&fit=crop&q=80" class="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110" alt="BlueMotion Engineering Project">
+                    </div>
+                    <div class="flex justify-between items-start">
+                        <div class="space-y-2">
+                            <p class="text-[10px] font-bold uppercase tracking-widest text-royal-400">Mechanical Engineering UI</p>
+                            <h3 class="text-2xl md:text-4xl font-bold tracking-tight">BlueMotion Engineering</h3>
+                        </div>
+                        <div class="w-12 h-12 rounded-full border border-white/20 flex items-center justify-center group-hover:bg-white group-hover:text-black transition-all">
+                            <i data-lucide="arrow-up-right" class="w-5 h-5"></i>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Display -->
+    <section class="py-24 md:py-48 px-6 bg-black relative overflow-hidden" id="stats">
+        <div class="max-w-[1440px] mx-auto flex flex-wrap justify-center md:justify-between gap-12 md:gap-20 relative z-10">
+            <div class="space-y-4 border-l-2 border-royal-600/30 pl-8 w-full md:w-auto">
+                <span class="text-6xl md:text-8xl lg:text-9xl font-black block counter" data-target="98">0%</span>
+                <p class="text-gray-500 font-bold uppercase tracking-widest text-xs">Satisfaction Rate</p>
+            </div>
+            <div class="space-y-4 border-l-2 border-royal-600/30 pl-8 w-full md:w-auto">
+                <span class="text-6xl md:text-8xl lg:text-9xl font-black block counter" data-target="250">0+</span>
+                <p class="text-gray-500 font-bold uppercase tracking-widest text-xs">Network Members</p>
+            </div>
+            <div class="space-y-4 border-l-2 border-royal-600/30 pl-8 w-full md:w-auto">
+                <span class="text-6xl md:text-8xl lg:text-9xl font-black block counter" data-target="15">0+</span>
+                <p class="text-gray-500 font-bold uppercase tracking-widest text-xs">Industry Awards</p>
+            </div>
+        </div>
+        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-[25vw] font-black text-white/[0.03] whitespace-nowrap pointer-events-none select-none">
+            RESULTS
+        </div>
+    </section>
+
+    <!-- CTA / Academy Link -->
+    <section id="academy" class="py-24 md:py-48 px-6 bg-royal-600 text-white text-center rounded-t-[3rem] md:rounded-t-[5rem]">
+        <div class="max-w-5xl mx-auto space-y-10 md:space-y-16">
+            <span class="text-[10px] md:text-xs font-bold uppercase tracking-[0.5em] opacity-60">Future-Proof Your Career</span>
+            <h2 class="text-5xl md:text-8xl font-black tracking-tighter uppercase leading-[1]">Elevate Your <br> Creative Impact</h2>
+            <p class="text-lg md:text-2xl opacity-80 leading-relaxed max-w-2xl mx-auto font-light">
+                Join our elite network of designers learning the high-income skills that power the modern digital economy.
+            </p>
+            <div class="flex flex-col sm:flex-row justify-center items-center gap-6">
+                <a href="apply.html" class="w-full sm:w-auto px-12 py-6 bg-white text-black rounded-full font-bold text-lg hover:bg-black hover:text-white transition-all duration-500 text-center">Join the Academy</a>
+                <a href="contact.html" class="w-full sm:w-auto px-12 py-6 bg-transparent border-2 border-white rounded-full font-bold text-lg hover:bg-white hover:text-black transition-all duration-500 text-center">Hire Our Talent</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-20 px-6 bg-black border-t border-white/5">
+        <div class="max-w-[1440px] mx-auto grid md:grid-cols-2 lg:grid-cols-4 gap-16 border-b border-white/5 pb-20 mb-12">
+            <div class="lg:col-span-2 space-y-8">
+                <div class="logo-container">
+                    <img src="logo/exevo logo.svg" alt="Logo" class="logo-img" onerror="this.src='https://api.dicebear.com/7.x/initials/svg?seed=EX&backgroundColor=4f46e5&fontFamily=Arial&fontWeight=800'">
+                </div>
+                <p class="text-gray-500 max-w-md text-lg leading-relaxed">Elevating brands through high-performance design, strategic content, and an elite global creative network.</p>
+                <div class="flex gap-4">
+                    <a href="#" class="w-10 h-10 rounded-full border border-white/10 flex items-center justify-center hover:bg-white hover:text-black transition-all"><i data-lucide="instagram" class="w-4 h-4"></i></a>
+                    <a href="#" class="w-10 h-10 rounded-full border border-white/10 flex items-center justify-center hover:bg-white hover:text-black transition-all"><i data-lucide="twitter" class="w-4 h-4"></i></a>
+                    <a href="#" class="w-10 h-10 rounded-full border border-white/10 flex items-center justify-center hover:bg-white hover:text-black transition-all"><i data-lucide="linkedin" class="w-4 h-4"></i></a>
+                </div>
+            </div>
+            
+            <div class="space-y-8">
+                <h4 class="text-xs font-bold uppercase tracking-widest text-white">Platform</h4>
+                <ul class="text-sm text-gray-500 space-y-4">
+                    <li><a href="portfolio.html" class="hover:text-white transition-colors">Selected Works</a></li>
+                    <li><a href="#services" class="hover:text-white transition-colors">Our Expertise</a></li>
+                    <li><a href="student page.html" class="hover:text-white transition-colors">The Academy</a></li>
+                    <li><a href="apply.html" class="hover:text-white transition-colors">Apply Now</a></li>
+                </ul>
+            </div>
+
+            <div class="space-y-8">
+                <h4 class="text-xs font-bold uppercase tracking-widest text-white">Inquiries</h4>
+                <ul class="text-sm text-gray-500 space-y-4">
+                    <li class="flex items-center gap-3 group">
+                        <i data-lucide="mail" class="w-4 h-4"></i>
+                        <a href="mailto:exevodesigners@gmail.com" class="hover:text-white transition-colors">exevodesigners@gmail.com</a>
+                    </li>
+                    <li class="flex items-center gap-3">
+                        <i data-lucide="phone" class="w-4 h-4"></i>
+                        <a href="tel:+254700552884" class="hover:text-white transition-colors">+254 700 552 884</a>
+                    </li>
+                    <li class="flex items-center gap-3">
+                        <i data-lucide="map-pin" class="w-4 h-4"></i>
+                        <span>Narok, Kenya</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="max-w-[1440px] mx-auto flex flex-col md:flex-row justify-between items-center gap-6 text-[10px] font-bold uppercase tracking-widest text-gray-600">
+            <p>© 2026 EXEVO DESIGNERS NETWORK. ALL RIGHTS RESERVED.</p>
+            <div class="flex gap-8">
+                <a href="#" class="hover:text-white transition-colors">Privacy Policy</a>
+                <a href="#" class="hover:text-white transition-colors">Terms of Service</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Initialize Lucide Icons
+        lucide.createIcons();
+
+        // Custom Cursor Logic
+        const cursor = document.getElementById('cursor');
+        const cursorRing = document.getElementById('cursor-ring');
+
+        document.addEventListener('mousemove', (e) => {
+            cursor.style.left = e.clientX + 'px';
+            cursor.style.top = e.clientY + 'px';
+            requestAnimationFrame(() => {
+                cursorRing.style.left = (e.clientX - 20) + 'px';
+                cursorRing.style.top = (e.clientY - 20) + 'px';
+            });
+        });
+
+        // Cursor interactions
+        const interactiveElements = document.querySelectorAll('a, button, .project-card, .group');
+        interactiveElements.forEach(el => {
+            el.addEventListener('mouseenter', () => {
+                cursorRing.style.transform = 'scale(1.8)';
+                cursorRing.style.background = 'white';
+                cursorRing.style.mixBlendMode = 'difference';
+                cursor.style.opacity = '0';
+            });
+            el.addEventListener('mouseleave', () => {
+                cursorRing.style.transform = 'scale(1)';
+                cursorRing.style.background = 'transparent';
+                cursorRing.style.mixBlendMode = 'normal';
+                cursor.style.opacity = '1';
+            });
+        });
+
+        // Sticky Navbar Scroll Effect
+        window.addEventListener('scroll', () => {
+            const nav = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                nav.classList.add('glass', 'py-2');
+                nav.classList.remove('py-6');
+            } else {
+                nav.classList.remove('glass', 'py-2');
+                nav.classList.add('py-6');
+            }
+        });
+
+        // Mobile Menu Toggling
+        const menuBtn = document.getElementById('menu-btn');
+        const closeMenu = document.getElementById('close-menu');
+        const mobileOverlay = document.getElementById('mobile-overlay');
+        const mobileLinks = document.querySelectorAll('.mobile-link');
+
+        menuBtn.addEventListener('click', () => {
+            mobileOverlay.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        });
+
+        const hideMenu = () => {
+            mobileOverlay.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        };
+
+        closeMenu.addEventListener('click', hideMenu);
+        mobileLinks.forEach(link => link.addEventListener('click', hideMenu));
+
+        // Stats Counter Animation
+        const startCounters = (section) => {
+            const counters = section.querySelectorAll('.counter');
+            counters.forEach(counter => {
+                const target = parseInt(counter.getAttribute('data-target'));
+                let count = 0;
+                const duration = 2000;
+                const increment = target / (duration / 16);
+                
+                const update = () => {
+                    count += increment;
+                    if (count < target) {
+                        counter.innerText = Math.floor(count) + (target === 98 ? '%' : '+');
+                        requestAnimationFrame(update);
+                    } else {
+                        counter.innerText = target + (target === 98 ? '%' : '+');
+                    }
+                };
+                update();
+            });
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    startCounters(entry.target);
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.2 });
+
+        const statsSection = document.getElementById('stats');
+        if (statsSection) observer.observe(statsSection);
+    </script>
+</body>
+</html>

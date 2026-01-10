@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Academy Application | Exevo Academy</title>
+
+    <!-- FAVICON -->
+    <link rel="icon" type="image/svg+xml" href="logo/exevo logo.svg">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { sans: ['Plus Jakarta Sans', 'sans-serif'] },
+                    colors: {
+                        royal: {
+                            50: '#eef2ff', 100: '#e0e7ff', 400: '#818cf8',
+                            500: '#6366f1', 600: '#4f46e5', 700: '#4338ca',
+                            800: '#3730a3', 900: '#1e1b4b', 950: '#03030d', 
+                        }
+                    },
+                    animation: {
+                        'pulse-slow': 'pulse 8s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { background-color: #03030d; color: white; width: 100%; overflow-x: hidden; }
+        
+        /* Smooth interactions & Glassmorphism */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.02);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        
+        .form-input {
+            background: transparent;
+            border: none;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 0;
+            padding-left: 0;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            color: white;
+        }
+        
+        .form-input:focus {
+            border-bottom-color: #6366f1;
+            outline: none;
+            box-shadow: none;
+            padding-left: 8px;
+        }
+
+        .royal-gradient {
+            background: linear-gradient(135deg, #6366f1 0%, #a855f7 100%);
+        }
+
+        /* Custom Select Styling */
+        select.form-input {
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='white'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right center;
+            background-size: 1.2em;
+        }
+        select.form-input option {
+            background-color: #03030d;
+            color: white;
+        }
+
+        /* Responsive menu clip path */
+        #mobile-menu-overlay {
+            clip-path: circle(0% at 100% 0%);
+            transition: clip-path 0.6s cubic-bezier(0.77, 0, 0.175, 1);
+        }
+        #mobile-menu-overlay.active {
+            clip-path: circle(150% at 100% 0%);
+        }
+
+        .logo-box {
+            height: 42px;
+            width: auto;
+            display: flex;
+            align-items: center;
+        }
+        @media (min-width: 768px) { .logo-box { height: 48px; } }
+        @media (min-width: 1024px) { .logo-box { height: 56px; } }
+        
+        .logo-img { height: 100%; width: auto; object-fit: contain; }
+
+        .hero-title {
+            font-size: clamp(3rem, 10vw, 8rem);
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <!-- Mobile Menu Overlay -->
+    <div id="mobile-menu-overlay" class="fixed inset-0 bg-royal-950 z-[100] lg:hidden flex flex-col justify-center items-center p-10">
+        <button id="close-menu" class="absolute top-8 right-8 text-white p-2">
+            <i data-lucide="x" class="w-10 h-10"></i>
+        </button>
+        <nav class="flex flex-col gap-8 text-3xl md:text-4xl font-bold uppercase text-center">
+            <a href="index.html" class="hover:text-royal-400 transition-colors">Home</a>
+            <a href="portfolio.html" class="hover:text-royal-400 transition-colors">Work</a>
+            <a href="student page.html" class="hover:text-royal-400 transition-colors">Academy</a>
+            <a href="contact.html" class="mt-4 px-10 py-5 bg-royal-600 rounded-full text-lg text-white">Contact Us</a>
+        </nav>
+    </div>
+
+    <!-- Background Accents -->
+    <div class="fixed inset-0 overflow-hidden pointer-events-none -z-10">
+        <div class="absolute top-[-5%] left-[-10%] w-[50%] h-[50%] bg-royal-600/10 rounded-full blur-[120px] animate-pulse-slow"></div>
+    </div>
+
+    <!-- Navbar -->
+    <nav id="navbar" class="fixed top-0 w-full z-40 transition-all duration-300 py-6 md:py-8 px-6">
+        <div class="max-w-7xl mx-auto flex justify-between items-center">
+            <a href="index.html" class="logo-box group">
+                <img src="logo/exevo logo.svg" alt="Exevo Logo" class="logo-img transition-transform duration-300 group-hover:scale-110" onerror="this.src='https://api.dicebear.com/7.x/initials/svg?seed=EX&backgroundColor=6366f1&fontFamily=Arial&fontWeight=800'">
+            </a>
+            
+            <div class="hidden lg:flex items-center gap-8">
+                <a href="student page.html" class="text-gray-400 hover:text-white transition-colors font-bold uppercase tracking-widest text-[10px]">Back to Curriculum</a>
+                <a href="index.html" class="text-gray-400 hover:text-white transition-colors font-bold uppercase tracking-widest text-[10px]">Home</a>
+            </div>
+
+            <button id="hamburger-btn" class="lg:hidden text-white p-2 focus:outline-none">
+                <i data-lucide="menu" class="w-8 h-8"></i>
+            </button>
+        </div>
+    </nav>
+
+    <main class="pt-32 md:pt-48 pb-20 px-6 overflow-hidden">
+        <div class="max-w-7xl mx-auto">
+            <div class="grid lg:grid-cols-12 gap-12 lg:gap-24 items-start">
+                
+                <!-- Left Content -->
+                <div class="lg:col-span-5 space-y-8 md:space-y-12">
+                    <div class="space-y-6">
+                        <h1 class="hero-title font-extrabold leading-[0.85] tracking-tighter">
+                            Join the <br>Next <br><span class="text-transparent bg-clip-text royal-gradient">Cohort.</span>
+                        </h1>
+                        <p class="text-base md:text-xl text-gray-400 max-w-sm leading-relaxed">
+                            Complete your application for the 2026 intake. Our team will review your profile and reach out within 48 hours.
+                        </p>
+                    </div>
+
+                    <div class="space-y-4">
+                        <p class="text-xs font-bold uppercase tracking-widest text-gray-500">Admissions Support</p>
+                        <a href="mailto:exevodesigners@gmail.com" class="text-lg md:text-2xl font-bold hover:text-royal-400 transition-colors break-all">exevodesigners@gmail.com</a>
+                    </div>
+
+                    <div class="hidden lg:block pt-4">
+                        <div class="p-8 glass-card rounded-2xl border-l-4 border-royal-500 max-w-sm">
+                             <p class="italic text-gray-300 text-sm md:text-base leading-relaxed">"Your creative career isn't a destination, it's a series of well-designed choices. This is choice #1."</p>
+                             <p class="mt-4 text-[10px] font-bold uppercase tracking-widest text-royal-400">— Admissions Team</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Application Form -->
+                <div class="lg:col-span-7">
+                    <form action="https://formsubmit.co/exevodesigners@gmail.com" method="POST" id="applyForm" class="space-y-10 md:space-y-12">
+                        <input type="hidden" name="_subject" value="NEW ACADEMY APPLICATION">
+                        <input type="hidden" name="_captcha" value="false">
+                        
+                        <div class="grid md:grid-cols-2 gap-x-12 gap-y-10">
+                            <!-- Name -->
+                            <div class="space-y-1">
+                                <label class="text-[10px] font-bold uppercase tracking-widest text-royal-400">01. Full Name</label>
+                                <input type="text" name="name" placeholder="Jane Doe *" class="w-full py-4 form-input text-lg md:text-xl" required>
+                            </div>
+
+                            <!-- Email -->
+                            <div class="space-y-1">
+                                <label class="text-[10px] font-bold uppercase tracking-widest text-royal-400">02. Email Address</label>
+                                <input type="email" name="email" placeholder="jane@example.com *" class="w-full py-4 form-input text-lg md:text-xl" required>
+                            </div>
+
+                            <!-- Phone -->
+                            <div class="space-y-1">
+                                <label class="text-[10px] font-bold uppercase tracking-widest text-royal-400">03. Phone Number</label>
+                                <input type="tel" name="phone" placeholder="+254 --- --- --- *" class="w-full py-4 form-input text-lg md:text-xl" required>
+                            </div>
+
+                            <!-- Country Selection -->
+                            <div class="space-y-1">
+                                <label class="text-[10px] font-bold uppercase tracking-widest text-royal-400">04. Country of Residence</label>
+                                <select name="country" id="country-select" class="w-full py-4 form-input text-lg md:text-xl" required>
+                                    <option value="" disabled selected>Select country</option>
+                                </select>
+                            </div>
+
+                            <!-- Tier Selection with Dynamic Pricing -->
+                            <div class="md:col-span-2 space-y-1">
+                                <label class="text-[10px] font-bold uppercase tracking-widest text-royal-400">05. Which tier are you applying for?</label>
+                                <select name="tier" id="tier-select" class="w-full py-4 form-input text-lg md:text-xl" required>
+                                    <option value="" disabled selected>Select your tier</option>
+                                    <option value="The Practitioner">The Practitioner</option>
+                                    <option value="The Pro Network">The Pro Network</option>
+                                </select>
+                            </div>
+
+                            <!-- Experience -->
+                            <div class="md:col-span-2 space-y-1">
+                                <label class="text-[10px] font-bold uppercase tracking-widest text-royal-400">06. Current Experience Level</label>
+                                <select name="experience" class="w-full py-4 form-input text-lg md:text-xl">
+                                    <option value="Beginner">Beginner (Zero experience)</option>
+                                    <option value="Intermediate">Intermediate (Some self-taught skill)</option>
+                                    <option value="Advanced">Advanced (Looking to go pro)</option>
+                                </select>
+                            </div>
+
+                            <!-- Motivation -->
+                            <div class="md:col-span-2 space-y-1">
+                                <label class="text-[10px] font-bold uppercase tracking-widest text-royal-400">07. Why join Exevo Academy?</label>
+                                <textarea name="motivation" rows="3" placeholder="I want to master digital craftsmanship because..." class="w-full py-4 form-input text-lg md:text-xl resize-none"></textarea>
+                            </div>
+                        </div>
+
+                        <div class="pt-6">
+                            <button type="submit" class="group relative inline-flex items-center justify-center w-full md:w-auto px-10 md:px-14 py-5 md:py-6 overflow-hidden font-bold rounded-full transition-all duration-300 transform hover:scale-105 active:scale-95">
+                                <span class="absolute inset-0 w-full h-full royal-gradient transition-all duration-300 group-hover:opacity-90"></span>
+                                <span class="relative text-white text-base md:text-lg flex items-center justify-center space-x-3">
+                                    <span>Submit Application</span>
+                                    <i data-lucide="arrow-right" class="w-5 h-5 group-hover:translate-x-1 transition-transform"></i>
+                                </span>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="py-16 md:py-24 px-6 bg-black">
+        <div class="max-w-7xl mx-auto grid md:grid-cols-2 lg:grid-cols-4 gap-12 md:gap-20 border-b border-white/5 pb-16 md:pb-24 mb-12">
+            <div class="lg:col-span-2 space-y-8">
+                <div class="logo-box">
+                    <img src="logo/exevo logo.svg" alt="Exevo Logo" class="logo-img" onerror="this.src='https://api.dicebear.com/7.x/initials/svg?seed=EX&backgroundColor=6366f1&fontFamily=Arial&fontWeight=800'">
+                </div>
+                <p class="text-gray-500 max-w-sm text-sm leading-relaxed">Elevating brands through high-performance design, strategic content, and a world-class creative network.</p>
+            </div>
+            
+            <div class="space-y-6">
+                <h4 class="text-[10px] font-bold uppercase tracking-widest text-white">Academy</h4>
+                <ul class="text-sm text-gray-500 space-y-4">
+                    <li><a href="student page.html" class="hover:text-white transition-colors">Curriculum</a></li>
+                    <li><a href="apply.html" class="hover:text-white transition-colors">Apply Now</a></li>
+                    <li><a href="portfolio.html" class="hover:text-white transition-colors">Work</a></li>
+                </ul>
+            </div>
+            
+            <div class="space-y-6">
+                <h4 class="text-[10px] font-bold uppercase tracking-widest text-white">Contact</h4>
+                <ul class="text-sm text-gray-500 space-y-4">
+                    <li class="flex items-center gap-3">
+                        <i data-lucide="mail" class="w-4 h-4 text-royal-400"></i>
+                        <a href="mailto:exevodesigners@gmail.com" class="hover:text-white transition-colors">exevodesigners@gmail.com</a>
+                    </li>
+                    <li class="flex items-center gap-3">
+                        <i data-lucide="phone" class="w-4 h-4 text-royal-400"></i>
+                        <a href="tel:+254700552884" class="hover:text-white transition-colors">+254 700 552 884</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6 text-[10px] font-bold uppercase tracking-widest text-gray-600 text-center md:text-left">
+            <p>© 2026 EXEVO DESIGNERS NETWORK.</p>
+            <div class="flex gap-8">
+                <a href="#" class="hover:text-white transition-colors">Privacy</a>
+                <a href="#" class="hover:text-white transition-colors">Terms</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        lucide.createIcons();
+
+        // Responsive Country & Currency Configuration
+        const countries = [
+            "Afghanistan", "Albania", "Algeria", "Andorra", "Angola", "Argentina", "Armenia", "Australia", "Austria", "Azerbaijan", 
+            "Bahamas", "Bahrain", "Bangladesh", "Barbados", "Belarus", "Belgium", "Belize", "Benin", "Bermuda", "Bhutan", "Bolivia", 
+            "Bosnia and Herzegovina", "Botswana", "Brazil", "Brunei", "Bulgaria", "Burkina Faso", "Burundi", "Cambodia", "Cameroon", 
+            "Canada", "Cape Verde", "Central African Republic", "Chad", "Chile", "China", "Colombia", "Comoros", "Congo", "Costa Rica", 
+            "Croatia", "Cuba", "Cyprus", "Czech Republic", "Denmark", "Djibouti", "Dominica", "Dominican Republic", "Ecuador", "Egypt", 
+            "El Salvador", "Equatorial Guinea", "Eritrea", "Estonia", "Ethiopia", "Fiji", "Finland", "France", "Gabon", "Gambia", "Georgia", 
+            "Germany", "Ghana", "Greece", "Grenada", "Guatemala", "Guinea", "Guinea-Bissau", "Guyana", "Haiti", "Honduras", "Hungary", 
+            "Iceland", "India", "Indonesia", "Iran", "Iraq", "Ireland", "Israel", "Italy", "Ivory Coast", "Jamaica", "Japan", "Jordan", 
+            "Kazakhstan", "Kenya", "Kiribati", "Korea, North", "Korea, South", "Kuwait", "Kyrgyzstan", "Laos", "Latvia", "Lebanon", 
+            "Lesotho", "Liberia", "Libya", "Liechtenstein", "Lithuania", "Luxembourg", "Macedonia", "Madagascar", "Malawi", "Malaysia", 
+            "Maldives", "Mali", "Malta", "Marshall Islands", "Mauritania", "Mauritius", "Mexico", "Micronesia", "Moldova", "Monaco", 
+            "Mongolia", "Montenegro", "Morocco", "Mozambique", "Myanmar", "Namibia", "Nauru", "Nepal", "Netherlands", "New Zealand", 
+            "Nicaragua", "Niger", "Nigeria", "Norway", "Oman", "Pakistan", "Palau", "Panama", "Papua New Guinea", "Paraguay", "Peru", 
+            "Philippines", "Poland", "Portugal", "Qatar", "Romania", "Russia", "Rwanda", "Saint Kitts and Nevis", "Saint Lucia", 
+            "Saint Vincent", "Samoa", "San Marino", "Sao Tome and Principe", "Saudi Arabia", "Senegal", "Serbia", "Seychelles", 
+            "Sierra Leone", "Singapore", "Slovakia", "Slovenia", "Solomon Islands", "Somalia", "South Africa", "Spain", "Sri Lanka", 
+            "Sudan", "Suriname", "Swaziland", "Sweden", "Switzerland", "Syria", "Taiwan", "Tajikistan", "Tanzania", "Thailand", "Togo", 
+            "Tonga", "Trinidad and Tobago", "Tunisia", "Turkey", "Turkmenistan", "Tuvalu", "Uganda", "Ukraine", "United Arab Emirates", 
+            "United Kingdom", "United States", "Uruguay", "Uzbekistan", "Vanuatu", "Vatican City", "Venezuela", "Vietnam", "Yemen", 
+            "Zambia", "Zimbabwe"
+        ];
+
+        const currencyMap = {
+            "Kenya": { sym: "Ksh.", p: 14999, n: 24999 },
+            "Tanzania": { sym: "TZS", p: 315000, n: 525000 },
+            "Uganda": { sym: "UGX", p: 465000, n: 775000 },
+            "Rwanda": { sym: "RWF", p: 155000, n: 260000 },
+            "South Africa": { sym: "ZAR R", p: 2150, n: 3600 },
+            "Nigeria": { sym: "NGN ₦", p: 175000, n: 290000 },
+            "United States": { sym: "USD $", p: 115, n: 195 },
+            "United Kingdom": { sym: "GBP £", p: 90, n: 150 },
+            "Germany": { sym: "EUR €", p: 105, n: 175 },
+            "France": { sym: "EUR €", p: 105, n: 175 },
+            "Italy": { sym: "EUR €", p: 105, n: 175 },
+            "Spain": { sym: "EUR €", p: 105, n: 175 },
+            "Netherlands": { sym: "EUR €", p: 105, n: 175 },
+            "India": { sym: "INR ₹", p: 9600, n: 16000 }
+        };
+
+        const defaultCurrency = { sym: "USD $", p: 115, n: 195 };
+
+        const countrySelect = document.getElementById('country-select');
+        const tierSelect = document.getElementById('tier-select');
+
+        // Populate Country Dropdown
+        countries.forEach(country => {
+            const opt = document.createElement('option');
+            opt.value = country;
+            opt.textContent = country;
+            if(country === "Kenya") opt.selected = true;
+            countrySelect.appendChild(opt);
+        });
+
+        // Update Prices
+        function updatePricing() {
+            const country = countrySelect.value;
+            const data = currencyMap[country] || defaultCurrency;
+            
+            const options = tierSelect.options;
+            // Update the text content of options while preserving the values
+            options[1].textContent = `The Practitioner (${data.sym} ${data.p.toLocaleString()})`;
+            options[2].textContent = `The Pro Network (${data.sym} ${data.n.toLocaleString()})`;
+        }
+
+        countrySelect.addEventListener('change', updatePricing);
+
+        // Responsive Navigation Logic
+        const hamburgerBtn = document.getElementById('hamburger-btn');
+        const closeMenuBtn = document.getElementById('close-menu');
+        const mobileOverlay = document.getElementById('mobile-menu-overlay');
+
+        function toggleMenu() {
+            mobileOverlay.classList.toggle('active');
+            document.body.style.overflow = mobileOverlay.classList.contains('active') ? 'hidden' : 'auto';
+        }
+
+        hamburgerBtn.addEventListener('click', toggleMenu);
+        closeMenuBtn.addEventListener('click', toggleMenu);
+
+        // Sticky Navbar Behavior
+        window.addEventListener('scroll', () => {
+            const nav = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                nav.style.background = 'rgba(3, 3, 13, 0.95)';
+                nav.style.backdropFilter = 'blur(10px)';
+                nav.style.paddingTop = '0.75rem';
+                nav.style.paddingBottom = '0.75rem';
+            } else {
+                nav.style.background = 'transparent';
+                nav.style.backdropFilter = 'none';
+                nav.style.paddingTop = window.innerWidth > 768 ? '2rem' : '1.5rem';
+                nav.style.paddingBottom = window.innerWidth > 768 ? '2rem' : '1.5rem';
+            }
+        });
+
+        // Initialize form view
+        window.onload = updatePricing;
+    </script>
+</body>
+</html>
